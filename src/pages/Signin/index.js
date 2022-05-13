@@ -9,19 +9,49 @@ function PageSignin() {
   // const [age, setAge] = useState("");
 
   // UseState v2
-  const [isBoolean, setisBoolean] = useState(false);
-  const [isloading, setisLoading] = useState(false);
-  const [error, setError] = useState({
-    status: false,
-    message: "",
-  });
-  const [form, setForm] = useState({
-    name: "",
-    age: "",
-  });
+  // const users = [{ name: "Rifaldi", age: 24 }];
+
+  // State boolean
+  const [isBoolean, setisBoolean] = useState(false),
+    // State loading
+    [isloading, setisLoading] = useState(false),
+    // State error
+    [error, setError] = useState({
+      status: false,
+      message: "",
+    }),
+    // State form
+    [form, setForm] = useState({
+      name: "",
+      age: "",
+      id: 0,
+    }),
+    // State user
+    [users, setUsers] = useState([{ id: 1, name: "Rifaldi", age: 24 }]),
+    // State type submit
+    [type, setType] = useState("login");
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value }, { ...form, [e.target.age]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleEdit = (data) => {
+    setForm({ name: data.name, age: data.age, id: data.id });
+    setType("Update");
+  };
+
+  const handleUpdate = (data) => {
+    const _temp = [...users];
+
+    _temp.forEach((user) => {
+      if (user.id === data.id) {
+        user.name = data.name;
+        user.age = data.age;
+      }
+    });
+
+    setUsers(_temp);
+    setType("login");
   };
 
   const validate = () => {
@@ -30,8 +60,7 @@ function PageSignin() {
     if (form.name === "") {
       error = true;
       setError({ status: true, message: "Name is required!" });
-    }
-    if (form.age === "") {
+    } else if (form.age === "") {
       error = true;
       setError({ status: true, message: "Age is required!" });
     }
@@ -43,11 +72,16 @@ function PageSignin() {
     setisLoading(true);
 
     // API succesful check
-    if (!validate) {
-      setisBoolean(true);
+    if (!validate()) {
+      let _temp = [...users];
+      // Add data to array
+      _temp.push({ id: _temp[_temp.length - 1].id + 1, name: form.name, age: form.age });
+
+      setUsers(_temp);
+      setForm({ id: 0, name: "", age: "" });
       setisLoading(false);
     } else {
-      error(false);
+      setisLoading(false);
     }
   };
 
@@ -60,16 +94,45 @@ function PageSignin() {
       <TextInput placeholder="Your Age" type="number" value={form.age} name="age" onChange={(e) => handleChange(e)} />
       <br />
       <br />
-      <Button name="Login" onClick={() => onSubmit()} loading={isloading} />
+      <Button
+        name={`${type === "login" ? "Login" : "Update"}`}
+        onClick={() => {
+          type === "login" ? onSubmit() : handleUpdate(form);
+        }}
+        loading={isloading}
+      />
 
-      {isBoolean ? (
+      <table style={{ border: "1px solid", width: "100%", textAlign: "center" }}>
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          {users.map((user) => {
+            return (
+              <tr>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+                <td>{user.age}</td>
+                <td>
+                  <Button name="Edit" onClick={() => handleEdit(user)} loading={isloading} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      {/* {isBoolean ? (
         <ul>
           <li>Nama : {form.name}</li>
           <li>Usia : {form.age}</li>
         </ul>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 }
