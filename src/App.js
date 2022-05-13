@@ -1,24 +1,12 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Title from "./Title";
-
-// Function as variable
-const Content = function () {
-  return "Content";
-};
-
-// Function arrow
-const Header = () => {
-  return "Menu";
-};
+import React from "react";
+import PageSignin from "./pages/Signin";
 
 function App() {
   return (
     <div>
-      <Header />
-      <Title title="React JS" name="Rifaldi H" />
-      <Content />
+      <PageSignin />
     </div>
+
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
