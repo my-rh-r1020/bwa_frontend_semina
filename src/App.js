@@ -2,10 +2,22 @@ import logo from "./logo.svg";
 import "./App.css";
 import Title from "./Title";
 
+// Function as variable
+const Content = function () {
+  return "Content";
+};
+
+// Function arrow
+const Header = () => {
+  return "Menu";
+};
+
 function App() {
   return (
     <div>
+      <Header />
       <Title title="React JS" name="Rifaldi H" />
+      <Content />
     </div>
     // <div className="App">
     //   <header className="App-header">
