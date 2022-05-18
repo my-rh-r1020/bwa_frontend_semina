@@ -96,9 +96,9 @@ import Navbar from "./components/Navbar";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar bg="dark" variant="dark" />
       <Routes>
-        <Route path="/" element={<PageSignin />} />
+        <Route path="/signin" element={<PageSignin />} />
         <Route path="categories" element={<Categories />} />
       </Routes>
     </BrowserRouter>

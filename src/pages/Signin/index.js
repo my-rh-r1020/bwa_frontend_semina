@@ -147,7 +147,7 @@ function PageSignin() {
         <p>Please login with your account</p>
       </main>
       <nav>
-        <Link to="/Categories">Categories</Link>
+        <Link to="/categories">Categories</Link>
       </nav>
     </>
   );
