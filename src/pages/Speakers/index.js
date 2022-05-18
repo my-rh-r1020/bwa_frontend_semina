@@ -9,36 +9,28 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import SearchInput from "../../components/SearchInput";
 import Table from "../../components/TableWithAction";
 
-function Categories() {
+function Speakers() {
   const navigate = useNavigate(),
     [isLoading, setIsLoading] = useState(false),
-    data = [{ name: "Backend", id: 1, aksi: "Edit | Delete" }];
+    data = [{ id: 1, name: "Rifaldi", role: "Backend" }];
 
   return (
     <Container>
-      {/* Breadcrumbs v1*/}
-      {/* <Breadcrumbs children="Categories" /> */}
-
-      {/* Breadcrumbs v2 */}
-      <Breadcrumbs text2nd="Categories" />
+      {/* Breadcrumbs */}
+      <Breadcrumbs text2nd="Speakers" />
 
       {/* Search */}
       <SearchInput />
 
       {/* Button Add */}
-      <Button variant="outline-primary" size="sm" action={() => navigate("/categories/create")}>
+      <Button variant="outline-primary" size="sm" action={() => navigate("/speakers/create")}>
         Add Data
       </Button>
 
       {/* Table */}
-      <Table thead={["Kategori", "Aksi"]} data={data} tbody={["name", "aksi"]} />
+      <Table thead={["Nama", "Role", "Aksi"]} data={data} tbody={["name", "role"]} />
     </Container>
-
-    // Backup component
-    // <Button variant="outline-primary" size="sm" action={() => setIsLoading(true)} loading={isLoading} disabled={isLoading}>
-    //   Add Data
-    // </Button>
   );
 }
 
-export default Categories;
+export default Speakers;

@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageSignin from "./pages/Signin";
 import Categories from "./pages/Categories";
 import Navbar from "./components/Navbar";
+import Speakers from "./pages/Speakers";
+import CategoriesCreate from "./pages/Categories/create";
 
 // function App() {
 //   // Use State
@@ -95,11 +97,17 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
+    // Router App
     <BrowserRouter>
       <Navbar bg="dark" variant="dark" />
       <Routes>
+        {/* Signin */}
         <Route path="/signin" element={<PageSignin />} />
+        {/* Categories */}
         <Route path="categories" element={<Categories />} />
+        <Route path="categories/create" element={<CategoriesCreate />} />
+        {/* Speakers */}
+        <Route path="speakers" element={<Speakers />} />
       </Routes>
     </BrowserRouter>
   );

@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 
 function ComponentSearchInput({ handleChange, query }) {
   return (
-    <Form.Group className="mb-3 col-lg-6 col-md-9">
+    <Form.Group className="mb-4 col-lg-6 col-md-9">
       <Form.Control type="text" placeholder="Search here" value={query} name={query} onChange={handleChange} />
     </Form.Group>
   );
