@@ -7,11 +7,13 @@ import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import SearchInput from "../../components/SearchInput";
+import Table from "../../components/TableWithAction";
 
 function Categories() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false),
-    path = "/categories";
+    path = "/categories",
+    data = [{ name: "backend", id: 1 }];
 
   return (
     <Container>
@@ -24,9 +26,13 @@ function Categories() {
       {/* Search */}
       <SearchInput />
 
+      {/* Button Add */}
       <Button variant="outline-primary" size="sm" action={() => navigate(`${path}/create`)}>
         Add Data
       </Button>
+
+      {/* Table */}
+      <Table thead={["Nama", "Aksi"]} data={data} tbody={["name"]} />
     </Container>
 
     // Backup component
