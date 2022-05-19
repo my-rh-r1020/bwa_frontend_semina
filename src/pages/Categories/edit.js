@@ -7,11 +7,11 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import CategoriesForm from "./form";
 import Alerts from "../../components/Alerts";
 
-function CategoriesCreate() {
+function CategoriesEdit() {
   const navigate = useNavigate(),
     [form, setForm] = useState({
-      name: "",
-      categories: "",
+      name: "Backend Programmer",
+      categories: "Programming",
     });
 
   const handleChange = (e) => {
@@ -25,10 +25,10 @@ function CategoriesCreate() {
   return (
     <Container>
       {/* Breadcrumbs */}
-      <Breadcrumbs url2nd="/categories" text2nd="Categories" text3rd="Add Data" />
+      <Breadcrumbs url2nd="/categories" text2nd="Categories" text3rd="Edit Data" />
 
       {/* Alerts */}
-      <Alerts variant="danger" message="Please provide categories name" />
+      <Alerts variant="info" message="Please provide categories name" />
 
       {/* Form untuk 1 field*/}
       {/* <CategoriesForm name="categories" value={form.value} handleChange={handleChange} handleSubmit={handleSubmit} /> */}
@@ -39,4 +39,4 @@ function CategoriesCreate() {
   );
 }
 
-export default CategoriesCreate;
+export default CategoriesEdit;

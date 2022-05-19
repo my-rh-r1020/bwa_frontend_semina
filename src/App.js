@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import PageSignin from "./pages/Signin";
 import Categories from "./pages/Categories";
+import CategoriesCreate from "./pages/Categories/create";
+import CategoriesEdit from "./pages/Categories/edit";
 import Navbar from "./components/Navbar";
 import Speakers from "./pages/Speakers";
-import CategoriesCreate from "./pages/Categories/create";
 
 // function App() {
 //   // Use State
@@ -103,9 +104,12 @@ function App() {
       <Routes>
         {/* Signin */}
         <Route path="/signin" element={<PageSignin />} />
+
         {/* Categories */}
         <Route path="categories" element={<Categories />} />
         <Route path="categories/create" element={<CategoriesCreate />} />
+        <Route path="categories/edit/:categoryId" element={<CategoriesEdit />} />
+
         {/* Speakers */}
         <Route path="speakers" element={<Speakers />} />
       </Routes>

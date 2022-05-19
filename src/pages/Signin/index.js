@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Alert from "../../components/alerts";
+import Alert from "../../components/Alerts";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput/index";
 

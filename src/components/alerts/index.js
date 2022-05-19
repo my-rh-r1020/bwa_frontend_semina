@@ -1,7 +1,12 @@
 import React from "react";
+import { Alert } from "react-bootstrap";
 
-function Alert({ message, type }) {
-  return <div style={{ color: `${type === "error" && "red"}` }}>{message}</div>;
+function Alerts({ variant, message }) {
+  return (
+    <Alert style={{ marginBottom: "1.75rem" }} variant={variant}>
+      {message}
+    </Alert>
+  );
 }
 
-export default Alert;
+export default Alerts;
