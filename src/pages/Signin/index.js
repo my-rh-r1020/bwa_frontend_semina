@@ -1,9 +1,20 @@
 import React, { useState } from "react";
+import { Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+// Import Component
 import Alert from "../../components/Alerts";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput/index";
+import Form from "./form";
+
+// Import Redux
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../redux/auth/actions";
+
+// Import Fetch Data
+import { postData } from "../../utils/fetchData";
+import AlertMessage from "../../components/Alerts";
 
 // function PageSignin() {
 //   // UseState v1
@@ -140,16 +151,52 @@ import TextInput from "../../components/TextInput/index";
 // }
 
 function PageSignin() {
+  const dispatch = useDispatch();
+  // Use State
+  const [form, setForm] = useState({
+      email: "",
+      password: "",
+    }),
+    [isLoading, setIsLoading] = useState(false),
+    [alert, setAlert] = useState({ status: false, type: "", message: "" });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const res = await postData(`api/v1/auth/signin`, form);
+
+      dispatch(userLogin(res.data.data.token, "role", "username"));
+
+      // setIsLoading(false);
+
+      // navigate("/categories");
+    } catch (err) {
+      setAlert({
+        ...alert,
+        status: true,
+        type: "danger",
+        message: err.response.data.msg,
+      });
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <>
-      <main>
-        <h2>Halaman Signin</h2>
-        <p>Please login with your account</p>
-      </main>
-      <nav>
-        <Link to="/categories">Categories</Link>
-      </nav>
-    </>
+    <Container md={12} className="vh-100">
+      <Card style={{ width: "50%" }} className="m-auto mt-5">
+        <Card.Body>
+          {/* Alerts */}
+          {alert.status && <AlertMessage variant={alert.type} message={alert.message} />}
+          <Card.Title className="text-center mt-3">Form Signin</Card.Title>
+          {/* Form */}
+          <Form form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} alert={alert} />
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
