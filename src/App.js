@@ -1,13 +1,18 @@
+// Import Libraries
 import React, { useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Import Pages
 import PageSignin from "./pages/Signin";
 import Categories from "./pages/Categories";
 import CategoriesCreate from "./pages/Categories/create";
 import CategoriesEdit from "./pages/Categories/edit";
 import Navbar from "./components/Navbar";
 import Speakers from "./pages/Speakers";
+
+// Import Listener
+import { listen } from "./redux/listener";
 
 // function App() {
 //   // Use State
@@ -77,26 +82,13 @@ import Speakers from "./pages/Speakers";
 //         })}
 //       </ul>
 //     </div>
-
-//     // ===================================================
-
-//     // <div>{ <PageSignin /> }</div>
-
-//     // <div className="App">
-//     //   <header className="App-header">
-//     //     <img src={logo} className="App-logo" alt="logo" />
-//     //     <p>
-//     //       Edit <code>src/App.js</code> and save to reload.
-//     //     </p>
-//     //     <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-//     //       Learn React
-//     //     </a>
-//     //   </header>
-//     // </div>
 //   );
 // }
 
 function App() {
+  React.useEffect(() => {
+    listen();
+  }, []);
   return (
     // Router App
     <BrowserRouter>

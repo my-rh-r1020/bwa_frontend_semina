@@ -1,6 +1,7 @@
+// Import Libraries
 import React, { useState } from "react";
 import { Card, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Import Component
 import Alert from "../../components/Alerts";
@@ -151,7 +152,8 @@ import AlertMessage from "../../components/Alerts";
 // }
 
 function PageSignin() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(),
+    navigate = useNavigate();
   // Use State
   const [form, setForm] = useState({
       email: "",
@@ -170,10 +172,11 @@ function PageSignin() {
       const res = await postData(`api/v1/auth/signin`, form);
 
       dispatch(userLogin(res.data.data.token, "role", "username"));
+      setIsLoading(false);
 
-      // setIsLoading(false);
+      setAlert({ status: true, type: "success", message: "Login Success. Please wait.." });
 
-      // navigate("/categories");
+      navigate("/categories");
     } catch (err) {
       setAlert({
         ...alert,
@@ -191,7 +194,7 @@ function PageSignin() {
         <Card.Body>
           {/* Alerts */}
           {alert.status && <AlertMessage variant={alert.type} message={alert.message} />}
-          <Card.Title className="text-center mt-3">Form Signin</Card.Title>
+          <Card.Title className="text-center mt-3 mb-3">Form Signin</Card.Title>
           {/* Form */}
           <Form form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} alert={alert} />
         </Card.Body>

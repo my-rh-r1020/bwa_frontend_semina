@@ -1,6 +1,8 @@
+// Import Libraries
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // Import Components
 import Navbar from "../../components/Navbar";
@@ -9,10 +11,20 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import SearchInput from "../../components/SearchInput";
 import Table from "../../components/TableWithAction";
 
+// Import Redux
+import { fetchCategories } from "../../redux/categories/actions";
+
 function Categories() {
-  const navigate = useNavigate(),
-    [isLoading, setIsLoading] = useState(false),
-    data = [{ name: "Backend", id: 1, aksi: "Edit | Delete" }];
+  const dispatch = useDispatch(),
+    navigate = useNavigate(),
+    [isLoading, setIsLoading] = useState(false);
+  // Redux
+  const auth = useSelector((state) => state.auth),
+    categories = useSelector((state) => state.categories);
+
+  React.useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
 
   return (
     <Container>
