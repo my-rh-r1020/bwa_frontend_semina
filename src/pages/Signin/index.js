@@ -1,5 +1,5 @@
 // Import Libraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -152,6 +152,8 @@ import AlertMessage from "../../components/Alerts";
 // }
 
 function PageSignin() {
+  let { token } = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : {};
+
   const dispatch = useDispatch(),
     navigate = useNavigate();
   // Use State
@@ -187,6 +189,12 @@ function PageSignin() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (token) return navigate(-1);
+    };
+  });
 
   return (
     <Container md={12} className="vh-100">

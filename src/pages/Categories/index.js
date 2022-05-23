@@ -1,5 +1,5 @@
 // Import Libraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,12 +19,18 @@ function Categories() {
     navigate = useNavigate(),
     [isLoading, setIsLoading] = useState(false);
   // Redux
-  const auth = useSelector((state) => state.auth),
+  const user = useSelector((state) => state.auth),
     categories = useSelector((state) => state.categories);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchCategories());
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (!user.token) return navigate("/signin");
+    };
+  });
 
   return (
     <Container>
@@ -43,7 +49,7 @@ function Categories() {
       </Button>
 
       {/* Table */}
-      <Table thead={["Kategori", "Aksi"]} data={data} tbody={["name", "aksi"]} />
+      <Table thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} />
     </Container>
 
     // Backup component
