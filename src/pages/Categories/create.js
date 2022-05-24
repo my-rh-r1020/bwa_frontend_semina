@@ -18,7 +18,7 @@ function CategoriesCreate() {
       name: "",
     }),
     [isLoading, setIsLoading] = useState(false),
-    [alert, setAlert] = useState({ status: false, type: "", message: "" });
+    [alert, setAlert] = useState({ status: false, variant: "", message: "" });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,12 +29,12 @@ function CategoriesCreate() {
     try {
       const res = await postData("api/v1/categories", form);
 
-      dispatch(setNotif({ status: true, variant: "success", message: `Successfully added category name for ${res.data.data.name}` }));
+      dispatch(setNotif(true, "success", `Successfully added category name for ${res.data.data.name}`));
       navigate("/categories");
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      setAlert({ ...alert, status: "true", type: "danger", message: err.response.data.msg });
+      setAlert({ ...alert, status: "true", variant: "danger", message: err.response.data.msg });
     }
   };
 
@@ -46,7 +46,7 @@ function CategoriesCreate() {
       <h3 style={{ marginBottom: "1.25rem" }}>Tambah Data Category</h3>
 
       {/* Alerts */}
-      {alert.status && <Alerts variant={alert.type} message={alert.message} />}
+      {alert.status && <Alerts variant={alert.variant} message={alert.message} />}
 
       {/* Form untuk 1 field*/}
       {/* <CategoriesForm name="categories" value={form.value} handleChange={handleChange} handleSubmit={handleSubmit} /> */}

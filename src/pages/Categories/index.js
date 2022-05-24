@@ -51,7 +51,7 @@ function Categories() {
       <Breadcrumbs text2nd="Categories" />
 
       {/* Notification */}
-      {notif.status && <Alerts variant={notif.type} message={notif.message} />}
+      {notif.status && <Alerts variant={notif.variant} message={notif.message} />}
 
       {/* Search */}
       {/* <SearchInput /> */}

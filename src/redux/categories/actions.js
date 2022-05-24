@@ -2,6 +2,7 @@ import { START_FETCH_CATEGORIES, SUCCESS_FETCH_CATEGORIES, ERROR_FETCH_CATEGORIE
 
 import { getData } from "../../utils/fetchData";
 import debounce from "debounce-promise";
+import { clearNotif } from "../notif/actions";
 
 let debouncedFetchCategories = debounce(getData, 1000);
 
@@ -30,6 +31,10 @@ export const fetchCategories = () => {
     dispatch(startFetchingCategories());
 
     try {
+      setTimeout(() => {
+        dispatch(clearNotif());
+      }, 5000);
+
       let res = await debouncedFetchCategories("api/v1/categories");
 
       dispatch(successFetchingCategories({ categories: res.data.data }));
