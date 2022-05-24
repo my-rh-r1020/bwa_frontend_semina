@@ -152,10 +152,9 @@ import AlertMessage from "../../components/Alerts";
 // }
 
 function PageSignin() {
-  let { token } = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : {};
-
   const dispatch = useDispatch(),
     navigate = useNavigate();
+
   // Use State
   const [form, setForm] = useState({
       email: "",
@@ -190,10 +189,19 @@ function PageSignin() {
     }
   };
 
+  // Handle Prevent Double Signin v1
+  // let { token } = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : {};
+  // useEffect(() => {
+  //   return () => {
+  //     if (token) return navigate(-1);
+  //   };
+  // });
+
+  // Handle Prevent Double Signin v2
   useEffect(() => {
-    return () => {
-      if (token) return navigate(-1);
-    };
+    let { token } = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : {};
+
+    if (token) return navigate(-1);
   });
 
   return (

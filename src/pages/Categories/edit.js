@@ -10,8 +10,7 @@ import Alerts from "../../components/Alerts";
 function CategoriesEdit() {
   const navigate = useNavigate(),
     [form, setForm] = useState({
-      name: "Backend Programmer",
-      categories: "Programming",
+      name: "Backend",
     });
 
   const handleChange = (e) => {
@@ -27,8 +26,10 @@ function CategoriesEdit() {
       {/* Breadcrumbs */}
       <Breadcrumbs url2nd="/categories" text2nd="Categories" text3rd="Edit Data" />
 
+      <h3 style={{ marginBottom: "1.25rem" }}>Edit Data Category</h3>
+
       {/* Alerts */}
-      <Alerts variant="info" message="Please provide categories name" />
+      {/* <Alerts variant="danger" message="Please provide categories name" /> */}
 
       {/* Form untuk 1 field*/}
       {/* <CategoriesForm name="categories" value={form.value} handleChange={handleChange} handleSubmit={handleSubmit} /> */}

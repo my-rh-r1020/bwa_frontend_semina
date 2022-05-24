@@ -18,13 +18,12 @@ import TextInputWithLabel from "../../components/TextInputWithLabel";
 // }
 
 // Form untuk banyak field
-function CategoriesForm({ handleSubmit, handleChange, form }) {
+function CategoriesForm({ handleSubmit, handleChange, form, isLoading }) {
   return (
     <Form>
-      <TextInputWithLabel label="Categories Name" type="text" name="name" value={form.name} onChange={handleChange} placeholder="Insert Categories Name" />
-      <TextInputWithLabel label="Categories Section" type="text" name="categories" value={form.categories} onChange={handleChange} placeholder="Insert Categories Section" />
-      <Button variant="outline-primary" action={handleSubmit}>
-        Submit
+      <TextInputWithLabel label="Category Name" type="text" name="name" value={form.name} onChange={handleChange} placeholder="Insert Categories Name" />
+      <Button variant="outline-primary" size="sm" action={handleSubmit} loading={isLoading}>
+        Save
       </Button>
     </Form>
   );

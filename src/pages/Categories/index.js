@@ -8,29 +8,39 @@ import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import SearchInput from "../../components/SearchInput";
+// import SearchInput from "../../components/SearchInput";
 import Table from "../../components/TableWithAction";
+import Alerts from "../../components/Alerts";
 
 // Import Redux
 import { fetchCategories } from "../../redux/categories/actions";
+import { setNotif } from "../../redux/notif/actions";
 
 function Categories() {
   const dispatch = useDispatch(),
     navigate = useNavigate(),
     [isLoading, setIsLoading] = useState(false);
+
   // Redux
   const user = useSelector((state) => state.auth),
-    categories = useSelector((state) => state.categories);
+    categories = useSelector((state) => state.categories),
+    notif = useSelector((state) => state.notif);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
 
+  // Prevent to signin page after login
   useEffect(() => {
     return () => {
       if (!user.token) return navigate("/signin");
     };
   });
+
+  // Delete Data
+  const handleDelete = (id) => {
+    console.log(id);
+  };
 
   return (
     <Container>
@@ -40,8 +50,11 @@ function Categories() {
       {/* Breadcrumbs v2 */}
       <Breadcrumbs text2nd="Categories" />
 
+      {/* Notification */}
+      {notif.status && <Alerts variant={notif.type} message={notif.message} />}
+
       {/* Search */}
-      <SearchInput />
+      {/* <SearchInput /> */}
 
       {/* Button Add */}
       <Button variant="outline-primary" size="sm" action={() => navigate("/categories/create")}>
@@ -49,7 +62,7 @@ function Categories() {
       </Button>
 
       {/* Table */}
-      <Table thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} />
+      <Table thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} editUrl={"/categories/edit"} deleteAction={(id) => handleDelete(id)} />
     </Container>
 
     // Backup component

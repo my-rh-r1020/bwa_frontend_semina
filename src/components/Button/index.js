@@ -7,9 +7,9 @@ import { Button } from "react-bootstrap";
 // }
 
 // Props v2
-function ComponentButton({ children, variant, size, loading, disabled, action }) {
+function ComponentButton({ children, variant, size, loading, disabled, action, className }) {
   return (
-    <Button variant={variant} size={size} disabled={disabled} onClick={action}>
+    <Button className={className} variant={variant} size={size} disabled={disabled} onClick={action}>
       {loading ? "Loading..." : children}
     </Button>
   );
