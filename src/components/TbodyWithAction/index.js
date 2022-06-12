@@ -1,16 +1,25 @@
 // Import Libraries
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 // Import Component
 import Button from "../Button";
 
-function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, actionNotDisplay }) {
+function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, actionNotDisplay, status }) {
   const navigate = useNavigate();
 
   return (
     <tbody>
-      {data.length ? (
+      {status === "process" ? (
+        <tr>
+          <td colSpan={4} style={{ textAlign: "center" }}>
+            <div className="flex items-center justify-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          </td>
+        </tr>
+      ) : data.length ? (
         data.map((data, index) => {
           return (
             <tr key={index}>

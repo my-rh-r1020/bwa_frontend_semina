@@ -2,7 +2,7 @@ import { START_FETCH_CATEGORIES, SUCCESS_FETCH_CATEGORIES, ERROR_FETCH_CATEGORIE
 
 const statusList = { idle: "idle", process: "process", success: "success", error: "error" };
 
-const initialState = { data: [], status: statusList.idle };
+const initialState = { data: [], keyword: "", status: statusList.idle };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

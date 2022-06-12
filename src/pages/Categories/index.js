@@ -62,7 +62,7 @@ function Categories() {
       </Button>
 
       {/* Table */}
-      <Table thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} editUrl={"/categories/edit"} deleteAction={(id) => handleDelete(id)} />
+      <Table status={categories.status} thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} editUrl={"/categories/edit"} deleteAction={(id) => handleDelete(id)} />
     </Container>
 
     // Backup component
