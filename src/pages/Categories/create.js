@@ -1,3 +1,4 @@
+// Import Libraries
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,8 @@ import { useDispatch } from "react-redux";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import CategoriesForm from "./form";
 import Alerts from "../../components/Alerts";
+
+// Import Redux
 import { setNotif } from "../../redux/notif/actions";
 
 function CategoriesCreate() {

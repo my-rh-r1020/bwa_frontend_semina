@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 // Import Components
 import Navbar from "../../components/Navbar";
@@ -15,6 +16,7 @@ import Alerts from "../../components/Alerts";
 // Import Redux
 import { fetchSpeakers } from "../../redux/speakers/actions";
 import { setNotif } from "../../redux/notif/actions";
+import { deleteData } from "../../utils/fetchData";
 
 function Speakers() {
   const dispatch = useDispatch(),
@@ -39,7 +41,27 @@ function Speakers() {
 
   // Delete Data
   const handleDelete = (id) => {
-    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to cancel this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteData(`api/v1/speakers/${id}`);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Category ${res.data.data.name} has been deleted.`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        dispatch(fetchSpeakers());
+      }
+    });
   };
 
   return (
@@ -51,7 +73,7 @@ function Speakers() {
       {notif.status && <Alerts variant={notif.variant} message={notif.message} />}
 
       {/* Search */}
-      {/* <SearchInput /> */}
+      <SearchInput />
 
       {/* Button Add */}
       <Button variant="outline-primary" size="sm" action={() => navigate("/speakers/create")}>
@@ -59,7 +81,7 @@ function Speakers() {
       </Button>
 
       {/* Table */}
-      <Table thead={["Nama", "Role", "Aksi"]} data={speakers.data} tbody={["name", "role"]} editUrl={"/speakers/edit"} deleteAction={(id) => handleDelete(id)} />
+      <Table status={speakers.status} thead={["Nama", "Role", "Aksi"]} data={speakers.data} tbody={["name", "role"]} editUrl={"/speakers/edit"} deleteAction={(id) => handleDelete(id)} />
     </Container>
   );
 }

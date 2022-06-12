@@ -16,6 +16,7 @@ import { userLogin } from "../../redux/auth/actions";
 // Import Fetch Data
 import { postData } from "../../utils/fetchData";
 import AlertMessage from "../../components/Alerts";
+import Swal from "sweetalert2";
 
 // function PageSignin() {
 //   // UseState v1
@@ -175,8 +176,28 @@ function PageSignin() {
       dispatch(userLogin(res.data.data.token, "role", "username"));
       setIsLoading(false);
 
-      setAlert({ status: true, type: "success", message: "Login Success. Please wait.." });
+      // Alerts v1
+      // setAlert({ status: true, type: "success", message: "Login Success. Please wait.." });
 
+      // Alerts v2
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          // toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+
+      // Navigasi
       navigate("/categories");
     } catch (err) {
       setAlert({

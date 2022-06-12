@@ -10,6 +10,7 @@ import CategoriesCreate from "./pages/Categories/create";
 import CategoriesEdit from "./pages/Categories/edit";
 import Navbar from "./components/Navbar";
 import Speakers from "./pages/Speakers";
+import SpeakersCreate from "./pages/Speakers/create";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -104,6 +105,7 @@ function App() {
 
         {/* Speakers */}
         <Route path="speakers" element={<Speakers />} />
+        <Route path="speakers/create" element={<SpeakersCreate />} />
       </Routes>
     </BrowserRouter>
   );

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 // Import Components
 import Navbar from "../../components/Navbar";
@@ -15,6 +16,7 @@ import Alerts from "../../components/Alerts";
 // Import Redux
 import { fetchCategories } from "../../redux/categories/actions";
 import { setNotif } from "../../redux/notif/actions";
+import { deleteData } from "../../utils/fetchData";
 
 function Categories() {
   const dispatch = useDispatch(),
@@ -39,7 +41,28 @@ function Categories() {
 
   // Delete Data
   const handleDelete = (id) => {
-    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to cancel this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+      // cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteData(`api/v1/categories/${id}`);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Category ${res.data.data.name} has been deleted.`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        dispatch(fetchCategories());
+      }
+    });
   };
 
   return (

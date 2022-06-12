@@ -1,3 +1,4 @@
+// Import Libraries
 import React from "react";
 import { Form } from "react-bootstrap";
 
@@ -18,12 +19,12 @@ import TextInputWithLabel from "../../components/TextInputWithLabel";
 // }
 
 // Form untuk banyak field
-function CategoriesForm({ handleSubmit, handleChange, form, isLoading }) {
+function CategoriesForm({ handleSubmit, handleChange, form, isLoading, edit }) {
   return (
     <Form>
       <TextInputWithLabel label="Category Name" type="text" name="name" value={form.name} onChange={handleChange} placeholder="Insert Categories Name" />
       <Button variant="outline-primary" size="sm" action={handleSubmit} loading={isLoading}>
-        Save
+        {edit ? "Update" : "Save"}
       </Button>
     </Form>
   );
