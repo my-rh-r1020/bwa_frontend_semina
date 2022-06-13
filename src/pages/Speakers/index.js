@@ -55,7 +55,7 @@ function Speakers() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `Category ${res.data.data.name} has been deleted.`,
+          title: `Speakers ${res.data.data.name} has been deleted.`,
           showConfirmButton: false,
           timer: 1500,
         });

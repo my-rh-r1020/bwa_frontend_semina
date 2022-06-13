@@ -15,11 +15,11 @@ export function getData(url, params) {
 }
 
 // Fetches POST data from an API
-export async function postData(url, payload) {
+export async function postData(url, payload, formData) {
   let { token } = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : {};
 
   return await axios.post(`${config.api_host}/${url}`, payload, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": formData ? "multipart/form-data" : "application/json" },
   });
 }
 

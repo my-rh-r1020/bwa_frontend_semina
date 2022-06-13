@@ -27,6 +27,7 @@ function CategoriesCreate() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Handle Submit Data
   const handleSubmit = async () => {
     setIsLoading(true);
     try {

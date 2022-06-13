@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { postData } from "../../utils/fetchData";
 
 // Import Components
 import Breadcrumbs from "../../components/Breadcrumbs";
@@ -16,19 +17,56 @@ function SpeakersCreate() {
   const navigate = useNavigate(),
     dispatch = useDispatch(),
     // Use State
-    [isLoading, setisLoading] = useState(false),
+    [isLoading, setIsLoading] = useState(false),
+    [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
     [form, setForm] = useState({
       name: "",
       role: "",
+      file: "",
       avatar: "",
     });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === "avatar") {
+      if (e?.target?.files[0]?.type === "image/png" || e?.target?.files[0]?.type === "image/jpeg" || e?.target?.files[0]?.type === "image/jpg") {
+        var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
+
+        if (size > 2) {
+          setAlert({ ...alert, status: true, variant: "danger", message: "Your image size must less than 3 MB" });
+
+          setForm({ ...form, file: "", [e.target.name]: "" });
+        } else {
+          setForm({ ...form, file: e.target.files[0], [e.target.name]: URL.createObjectURL(e.target.files[0]) });
+        }
+      } else {
+        setAlert({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
+        setForm({ ...form, file: "", [e.target.name]: "" });
+      }
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
   };
 
-  const handleSubmit = () => {
-    // TO DO Submit data
+  // Handle Submit Data
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      // FormData
+      let formData = new FormData();
+
+      formData.append("name", form.name);
+      formData.append("role", form.role);
+      formData.append("avatar", form.file);
+
+      const res = await postData("api/v1/speakers", formData, true);
+
+      dispatch(setNotif(true, "success", `Successfully added speakers data for ${res.data.data.name}`));
+      navigate("/speakers");
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setAlert({ ...alert, status: "true", variant: "danger", message: err.response.data.msg });
+    }
   };
 
   return (

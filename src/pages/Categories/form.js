@@ -23,6 +23,7 @@ function CategoriesForm({ handleSubmit, handleChange, form, isLoading, edit }) {
   return (
     <Form>
       <TextInputWithLabel label="Category Name" type="text" name="name" value={form.name} onChange={handleChange} placeholder="Insert Categories Name" />
+      {/* Button */}
       <Button variant="outline-primary" size="sm" action={handleSubmit} loading={isLoading}>
         {edit ? "Update" : "Save"}
       </Button>
