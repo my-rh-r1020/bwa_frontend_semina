@@ -1,7 +1,9 @@
 // Import Libraries
 import React from "react";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap";
+import { config } from "../../config";
 
 // Import Component
 import Button from "../Button";
@@ -23,7 +25,12 @@ function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, a
         data.map((data, index) => {
           return (
             <tr key={index}>
-              {Object.keys(data).map((key) => display.indexOf(key) > -1 && <td key={key}>{data[key]}</td>)}
+              {Object.keys(data).map(
+                (key) =>
+                  display.indexOf(key) > -1 && (
+                    <td key={key}>{key === "avatar" ? <Image height={50} width={50} roundedCircle src={`${config.api_image}/avatar/${data[key]}`} /> : key === "date" ? moment(data[key]).format("DD-MM-YYYY, h:mm:ss a") : data[key]}</td>
+                  )
+              )}
               {!actionNotDisplay && (
                 <td>
                   {editUrl && (
@@ -44,7 +51,7 @@ function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, a
       ) : (
         <tr>
           <td colSpan={display.length + 1} style={{ textAlign: "center" }}>
-            Tidak Ditemukan Data
+            No Records Data
           </td>
         </tr>
       )}

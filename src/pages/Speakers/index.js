@@ -14,7 +14,7 @@ import Table from "../../components/TableWithAction";
 import Alerts from "../../components/Alerts";
 
 // Import Redux
-import { fetchSpeakers } from "../../redux/speakers/actions";
+import { fetchSpeakers, setKeyword } from "../../redux/speakers/actions";
 import { setNotif } from "../../redux/notif/actions";
 import { deleteData } from "../../utils/fetchData";
 
@@ -30,7 +30,7 @@ function Speakers() {
 
   useEffect(() => {
     dispatch(fetchSpeakers());
-  }, []);
+  }, [dispatch, speakers.keyword]);
 
   // Prevent to signin page after login
   useEffect(() => {
@@ -53,7 +53,7 @@ function Speakers() {
       if (result.isConfirmed) {
         const res = await deleteData(`api/v1/speakers/${id}`);
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: `Category ${res.data.data.name} has been deleted.`,
           showConfirmButton: false,
@@ -73,7 +73,7 @@ function Speakers() {
       {notif.status && <Alerts variant={notif.variant} message={notif.message} />}
 
       {/* Search */}
-      <SearchInput />
+      <SearchInput name="keyword" value={speakers.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
 
       {/* Button Add */}
       <Button variant="outline-primary" size="sm" action={() => navigate("/speakers/create")}>
@@ -81,7 +81,7 @@ function Speakers() {
       </Button>
 
       {/* Table */}
-      <Table status={speakers.status} thead={["Nama", "Role", "Aksi"]} data={speakers.data} tbody={["name", "role"]} editUrl={"/speakers/edit"} deleteAction={(id) => handleDelete(id)} />
+      <Table status={speakers.status} thead={["Nama", "Avatar", "Role", "Aksi"]} data={speakers.data} tbody={["name", "avatar", "role"]} editUrl={"/speakers/edit"} deleteAction={(id) => handleDelete(id)} />
     </Container>
   );
 }

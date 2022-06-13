@@ -54,7 +54,7 @@ function Categories() {
       if (result.isConfirmed) {
         const res = await deleteData(`api/v1/categories/${id}`);
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: `Category ${res.data.data.name} has been deleted.`,
           showConfirmButton: false,

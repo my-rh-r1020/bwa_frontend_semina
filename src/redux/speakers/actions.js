@@ -1,4 +1,4 @@
-import { START_FETCHING_SPEAKERS, SUCCESS_FETCHING_SPEAKERS, ERROR_FETCHING_SPEAKERS } from "./constants";
+import { START_FETCHING_SPEAKERS, SUCCESS_FETCHING_SPEAKERS, ERROR_FETCHING_SPEAKERS, SET_KEYWORD_SPEAKERS } from "./constants";
 
 import { getData } from "../../utils/fetchData";
 import debounce from "debounce-promise";
@@ -23,7 +23,7 @@ export const errorFetchingSpeakers = () => {
 
 // Fetching Data
 export const fetchSpeakers = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(startFetchingSpeakers());
 
     try {
@@ -31,11 +31,21 @@ export const fetchSpeakers = () => {
         dispatch(clearNotif());
       }, 5000);
 
-      let res = await debounceFetchSpeakers("api/v1/speakers");
+      // Set Filter / Keyword
+      let params = {
+        keyword: getState().speakers.keyword,
+      };
+
+      let res = await debounceFetchSpeakers("api/v1/speakers", params);
 
       dispatch(successFetchingSpeakers({ speakers: res.data.data }));
     } catch (error) {
       dispatch(errorFetchingSpeakers());
     }
   };
+};
+
+// Keywords
+export const setKeyword = (keyword) => {
+  return { type: SET_KEYWORD_SPEAKERS, keyword };
 };
