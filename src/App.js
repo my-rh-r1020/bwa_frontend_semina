@@ -13,6 +13,8 @@ import Speakers from "./pages/Speakers";
 import SpeakersCreate from "./pages/Speakers/create";
 import SpeakersEdit from "./pages/Speakers/edit";
 import Events from "./pages/Events";
+import EventsCreate from "./pages/Events/create";
+// import EventsEdit from "./pages/Events/edit";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -112,6 +114,8 @@ function App() {
 
         {/* Events */}
         <Route path="events" element={<Events />} />
+        <Route path="events/create" element={<EventsCreate />} />
+        {/* <Route path="events/edit/:eventsId" element={<EventsEdit />} /> */}
       </Routes>
     </BrowserRouter>
   );

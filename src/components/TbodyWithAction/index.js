@@ -28,7 +28,15 @@ function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, a
               {Object.keys(data).map(
                 (key) =>
                   display.indexOf(key) > -1 && (
-                    <td key={key}>{key === "avatar" ? <Image height={50} width={50} roundedCircle src={`${config.api_image}/avatar/${data[key]}`} /> : key === "date" ? moment(data[key]).format("DD-MM-YYYY, h:mm:ss a") : data[key]}</td>
+                    <td key={key}>
+                      {key === "avatar" || key === "cover" ? (
+                        <Image height={50} width={50} roundedCircle src={key === "avatar" ? `${config.api_image}/avatar/${data[key]}` : `${config.api_image}/cover_event/${data[key]}`} />
+                      ) : key === "date" ? (
+                        moment(data[key]).format("DD-MM-YYYY, h:mm:ss a")
+                      ) : (
+                        data[key]
+                      )}
+                    </td>
                   )
               )}
               {!actionNotDisplay && (
