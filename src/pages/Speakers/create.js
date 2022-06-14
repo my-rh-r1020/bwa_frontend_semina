@@ -19,12 +19,7 @@ function SpeakersCreate() {
     // Use State
     [isLoading, setIsLoading] = useState(false),
     [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
-    [form, setForm] = useState({
-      name: "",
-      role: "",
-      file: "",
-      avatar: "",
-    });
+    [form, setForm] = useState({ name: "", role: "", file: "", avatar: "" });
 
   const handleChange = (e) => {
     if (e.target.name === "avatar") {
@@ -33,7 +28,6 @@ function SpeakersCreate() {
 
         if (size > 2) {
           setAlert({ ...alert, status: true, variant: "danger", message: "Your image size must less than 3 MB" });
-
           setForm({ ...form, file: "", [e.target.name]: "" });
         } else {
           setForm({ ...form, file: e.target.files[0], [e.target.name]: URL.createObjectURL(e.target.files[0]) });
@@ -60,7 +54,7 @@ function SpeakersCreate() {
 
       const res = await postData("api/v1/speakers", formData, true);
 
-      dispatch(setNotif(true, "success", `Successfully added speakers data for ${res.data.data.name}`));
+      dispatch(setNotif(true, "success", `Successfully added speakers for ${res.data.data.name}`));
       navigate("/speakers");
       setIsLoading(false);
     } catch (err) {
