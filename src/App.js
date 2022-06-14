@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Speakers from "./pages/Speakers";
 import SpeakersCreate from "./pages/Speakers/create";
 import SpeakersEdit from "./pages/Speakers/edit";
+import Events from "./pages/Events";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -108,6 +109,9 @@ function App() {
         <Route path="speakers" element={<Speakers />} />
         <Route path="speakers/create" element={<SpeakersCreate />} />
         <Route path="speakers/edit/:speakersId" element={<SpeakersEdit />} />
+
+        {/* Events */}
+        <Route path="events" element={<Events />} />
       </Routes>
     </BrowserRouter>
   );
