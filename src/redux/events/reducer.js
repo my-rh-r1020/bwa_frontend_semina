@@ -18,10 +18,10 @@ export default function reducer(state = initialState, action) {
       return { ...state, keyword: action.keyword };
 
     case SET_CATEGORY:
-      return { ...state, category: statusList.category };
+      return { ...state, category: action.category };
 
     case SET_SPEAKER:
-      return { ...state, speaker: statusList.speaker };
+      return { ...state, speaker: action.speaker };
 
     default:
       return state;

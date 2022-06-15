@@ -43,8 +43,3 @@ export const fetchCategories = () => {
     }
   };
 };
-
-// Set Keyword
-// export const setKeyword = (keyword) => {
-//   return { type: SET_KEYWORD, keyword };
-// };

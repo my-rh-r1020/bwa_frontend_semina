@@ -4,7 +4,7 @@ import { getData } from "../../utils/fetchData";
 import debounce from "debounce-promise";
 import { clearNotif } from "../notif/actions";
 
-let debounceFetchEvents = debounce(getData, 1000);
+let debouncedFetchEvents = debounce(getData, 1000);
 
 // Start Fecthing Data
 export const startFetchingEvents = () => {
@@ -31,9 +31,14 @@ export const fetchEvents = () => {
       }, 5000);
 
       // Set Filter / Keyword
-      let params = { keyword: getState().events.keyword, category: getState().events.category.value || "", speaker: getState().events.speaker.value || "" };
+      let params = { keyword: getState().events.keyword, category: getState().events?.category?.value || "", speaker: getState().events?.speaker?.value || "" };
 
-      let res = await debounceFetchEvents("api/v1/events", params);
+      let res = await debouncedFetchEvents("api/v1/events", params);
+
+      res.data.data.forEach((res) => {
+        res.categoryName = res?.category?.name ?? "";
+      });
+
       dispatch(successFetchingEvents({ events: res.data.data }));
     } catch (err) {
       dispatch(errorFetchingEvents());

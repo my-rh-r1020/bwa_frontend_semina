@@ -1,5 +1,5 @@
 // Import Librarys
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,22 +15,28 @@ import Table from "../../components/TableWithAction";
 
 // Import Redux
 import { fetchEvents, setKeyword, setCategory, setSpeaker } from "../../redux/events/actions";
+import { fetchListCategories } from "../../redux/lists/actions";
 import { setNotif } from "../../redux/notif/actions";
 
 export default function Events() {
   const navigate = useNavigate(),
-    dispatch = useDispatch(),
-    // Use State
-    [isLoading, setIsLoading] = useState(false);
+    dispatch = useDispatch();
 
   // Redux
   const user = useSelector((state) => state.auth),
     events = useSelector((state) => state.events),
-    notif = useSelector((state) => state.notif);
+    notif = useSelector((state) => state.notif),
+    lists = useSelector((state) => state.lists);
 
+  // Fetch Event
   useEffect(() => {
     dispatch(fetchEvents());
-  }, [dispatch, events.keyword]);
+  }, [dispatch, events.keyword, events.category]);
+
+  // Fetch List Category
+  useEffect(() => {
+    dispatch(fetchListCategories());
+  }, [dispatch]);
 
   // Prevent to signin page after login
   useEffect(() => {
@@ -79,11 +85,11 @@ export default function Events() {
         </Col>
         {/* Filter SelectBox 1 */}
         <Col>
-          <SelectBox placeholder="Filter by Category" />
+          <SelectBox placeholder="Category Filters" handleChange={(e) => dispatch(setCategory(e))} options={lists.categories} name="category" value={events.categories} isClearable={true} />
         </Col>
         {/* Filter SelectBox 2 */}
         <Col>
-          <SelectBox placeholder="Filter by Speaker" />
+          <SelectBox placeholder="Speaker Filters" />
         </Col>
       </Row>
 
@@ -93,7 +99,14 @@ export default function Events() {
       </Button>
 
       {/* Table */}
-      <Table status={events.status} thead={["Title", "Price", "Jadwal", "Cover", "Aksi"]} data={events.data} tbody={["title", "cover", "price", "date"]} editUrl={"/events/edit"} deleteAction={(id) => handleDelete(id)} />
+      <Table
+        status={events.status}
+        thead={["Event", "Harga", "Jadwal", "Banner", "Kategori", "Aksi"]}
+        data={events.data}
+        tbody={["title", "price", "date", "cover", "categoryName"]}
+        editUrl={"/events/edit"}
+        deleteAction={(id) => handleDelete(id)}
+      />
     </Container>
   );
 }

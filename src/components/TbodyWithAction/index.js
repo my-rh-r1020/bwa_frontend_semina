@@ -10,12 +10,11 @@ import Button from "../Button";
 
 function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, actionNotDisplay, status }) {
   const navigate = useNavigate();
-
   return (
     <tbody>
       {status === "process" ? (
         <tr>
-          <td colSpan={4} style={{ textAlign: "center" }}>
+          <td colSpan={6} style={{ textAlign: "center" }}>
             <div className="flex items-center justify-center">
               <Spinner animation="border" variant="primary" />
             </div>
