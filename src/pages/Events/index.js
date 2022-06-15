@@ -14,7 +14,7 @@ import SelectBox from "../../components/SelectBox";
 import Table from "../../components/TableWithAction";
 
 // Import Redux
-import { fetchEvents, setKeyword } from "../../redux/events/actions";
+import { fetchEvents, setKeyword, setCategory, setSpeaker } from "../../redux/events/actions";
 import { setNotif } from "../../redux/notif/actions";
 
 export default function Events() {

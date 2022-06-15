@@ -1,4 +1,4 @@
-import { START_FETCHING_EVENTS, SUCCESS_FETCHING_EVENTS, ERROR_FETCHING_EVENTS, SET_KEYWORD_EVENTS } from "./constants";
+import { START_FETCHING_EVENTS, SUCCESS_FETCHING_EVENTS, ERROR_FETCHING_EVENTS, SET_KEYWORD_EVENTS, SET_CATEGORY, SET_SPEAKER } from "./constants";
 
 import { getData } from "../../utils/fetchData";
 import debounce from "debounce-promise";
@@ -31,7 +31,7 @@ export const fetchEvents = () => {
       }, 5000);
 
       // Set Filter / Keyword
-      let params = { keyword: getState().events.keyword };
+      let params = { keyword: getState().events.keyword, category: getState().events.category.value || "", speaker: getState().events.speaker.value || "" };
 
       let res = await debounceFetchEvents("api/v1/events", params);
       dispatch(successFetchingEvents({ events: res.data.data }));
@@ -44,4 +44,14 @@ export const fetchEvents = () => {
 // Keywords
 export const setKeyword = (keyword) => {
   return { type: SET_KEYWORD_EVENTS, keyword };
+};
+
+// Category
+export const setCategory = (category) => {
+  return { type: SET_CATEGORY, category };
+};
+
+// Speaker
+export const setSpeaker = (speaker) => {
+  return { type: SET_SPEAKER, speaker };
 };
