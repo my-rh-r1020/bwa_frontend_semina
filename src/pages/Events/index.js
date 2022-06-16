@@ -15,7 +15,7 @@ import Table from "../../components/TableWithAction";
 
 // Import Redux
 import { fetchEvents, setKeyword, setCategory, setSpeaker } from "../../redux/events/actions";
-import { fetchListCategories } from "../../redux/lists/actions";
+import { fetchListCategories, fetchListSpeakers } from "../../redux/lists/actions";
 import { setNotif } from "../../redux/notif/actions";
 
 export default function Events() {
@@ -31,12 +31,18 @@ export default function Events() {
   // Fetch Event
   useEffect(() => {
     dispatch(fetchEvents());
-  }, [dispatch, events.keyword, events.category]);
+  }, [dispatch, events.keyword, events.category, events.speaker]);
 
   // Fetch List Category
   useEffect(() => {
+    dispatch(fetchListSpeakers());
     dispatch(fetchListCategories());
   }, [dispatch]);
+
+  // Fetch List Speaker
+  // useEffect(() => {
+  //   dispatch(fetchListSpeakers());
+  // }, [dispatch]);
 
   // Prevent to signin page after login
   useEffect(() => {
@@ -81,15 +87,15 @@ export default function Events() {
       <Row>
         {/* Search */}
         <Col>
-          <SearchInput name="keyword" value={events.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
+          <SearchInput name="keyword" className="mb-4 col-lg" value={events.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Col>
-        {/* Filter SelectBox 1 */}
+        {/* Filter SelectBox Categories */}
         <Col>
-          <SelectBox placeholder="Category Filters" handleChange={(e) => dispatch(setCategory(e))} options={lists.categories} name="category" value={events.categories} isClearable={true} />
+          <SelectBox placeholder="Category Filters" name="category" handleChange={(e) => dispatch(setCategory(e))} options={lists.categories} value={events.categories} isClearable={true} />
         </Col>
-        {/* Filter SelectBox 2 */}
+        {/* Filter SelectBox Speakers */}
         <Col>
-          <SelectBox placeholder="Speaker Filters" />
+          <SelectBox placeholder="Speaker Filters" name="speaker" handleChange={(e) => dispatch(setSpeaker(e))} options={lists.speakers} value={events.speaker} isClearable={true} />
         </Col>
       </Row>
 
@@ -101,9 +107,9 @@ export default function Events() {
       {/* Table */}
       <Table
         status={events.status}
-        thead={["Event", "Harga", "Jadwal", "Banner", "Kategori", "Aksi"]}
+        thead={["Event", "Harga", "Jadwal", "Banner", "Kategori", "Speaker", "Aksi"]}
         data={events.data}
-        tbody={["title", "price", "date", "cover", "categoryName"]}
+        tbody={["title", "price", "date", "cover", "categoryName", "speakerName"]}
         editUrl={"/events/edit"}
         deleteAction={(id) => handleDelete(id)}
       />

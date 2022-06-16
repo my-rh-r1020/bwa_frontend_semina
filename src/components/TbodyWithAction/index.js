@@ -14,7 +14,7 @@ function TbodyWithAction({ data, display, editUrl, deleteAction, customAction, a
     <tbody>
       {status === "process" ? (
         <tr>
-          <td colSpan={6} style={{ textAlign: "center" }}>
+          <td colSpan={display.length + 1} style={{ textAlign: "center" }}>
             <div className="flex items-center justify-center">
               <Spinner animation="border" variant="primary" />
             </div>

@@ -37,6 +37,7 @@ export const fetchEvents = () => {
 
       res.data.data.forEach((res) => {
         res.categoryName = res?.category?.name ?? "";
+        res.speakerName = res?.speaker?.name ?? "-";
       });
 
       dispatch(successFetchingEvents({ events: res.data.data }));
