@@ -25,7 +25,7 @@ function SpeakersCreate() {
     if (e.target.name === "avatar") {
       if (e?.target?.files[0]?.type === "image/png" || e?.target?.files[0]?.type === "image/jpeg" || e?.target?.files[0]?.type === "image/jpg") {
         var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
-
+        // Cek Size Image
         if (size > 2) {
           setAlert({ ...alert, status: true, variant: "danger", message: "Your image size must less than 3 MB" });
           setForm({ ...form, file: "", [e.target.name]: "" });
