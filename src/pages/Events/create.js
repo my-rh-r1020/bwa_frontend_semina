@@ -19,7 +19,7 @@ export default function EventsCreate() {
     // Use State
     [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
     [isLoading, setIsLoading] = useState(false),
-    [form, setForm] = useState({ title: "", price: "", date: "", cover: "", about: "", venueName: "", tagline: "", keypoint: "", status: "", stock: "", category: "", speaker: "" });
+    [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: [""], status: "", stock: "", category: "", speaker: "" });
 
   const handleChange = (e) => {
     if (e.target.name === "cover") {

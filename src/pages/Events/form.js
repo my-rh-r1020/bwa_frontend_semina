@@ -1,6 +1,6 @@
 // Import Libraries
 import React, { useEffect } from "react";
-import { Button, Col, Figure, Form, Row } from "react-bootstrap";
+import { Button, CloseButton, Col, Figure, Form, FormControl, InputGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 // Import Component
@@ -29,7 +29,7 @@ export default function EventsForm({ handleChange, handleSubmit, form, isLoading
       {/* Row 1 */}
       <Row>
         <Col>
-          <TextInputWithLabel label="Event Title" type="text" name="title" value={form.title} onChange={handleChange} placeholder="Insert Event Title" />
+          <TextInputWithLabel label="Title" type="text" name="title" value={form.title} onChange={handleChange} placeholder="Insert Event Title" />
         </Col>
 
         <Col>
@@ -39,17 +39,24 @@ export default function EventsForm({ handleChange, handleSubmit, form, isLoading
       {/* Row 2 */}
       <Row>
         <Col>
-          <TextInputWithLabel label="Event Venue" type="text" name="venueName" value={form.venueName} onChange={handleChange} placeholder="Insert Event Location" />
+          <TextInputWithLabel label="Locations" type="text" name="venueName" value={form.venueName} onChange={handleChange} placeholder="Insert Event Location" />
         </Col>
         <Col>
-          <TextInputWithLabel label="Event Price" type="text" name="price" value={form.price} onChange={handleChange} placeholder="Insert Event Price" />
+          <TextInputWithLabel label="Price" type="number" name="price" value={form.price} onChange={handleChange} placeholder="Insert Event Price" />
         </Col>
       </Row>
 
-      <TextInputWithLabel label="Event Description" type="text" name="about" value={form.about} onChange={handleChange} placeholder="Insert Event Description" />
-      <TextInputWithLabel label="Event Tagline" type="text" name="tagline" value={form.tagline} onChange={handleChange} placeholder="Insert Event Tagline" />
-      <TextInputWithLabel label="Event Keypoints" type="text" name="keypoint" value={form.keypoint} onChange={handleChange} placeholder="Insert Event Keypoints" />
-      <TextInputWithLabel label="Event Stock" type="text" name="stock" value={form.stock} onChange={handleChange} placeholder="Insert Event Stock" />
+      <TextInputWithLabel label="Description" type="text" name="about" value={form.about} onChange={handleChange} placeholder="Insert Event Description" />
+      <TextInputWithLabel label="Tagline" type="text" name="tagline" value={form.tagline} onChange={handleChange} placeholder="Insert Event Tagline" />
+      {form.keypoint.map((key, i) => {
+        <InputGroup className="mb-3" key={i}>
+          <FormControl placeholder="Insert Keypoint" aria-label="Keypoint" aria-describedby="basic-addon2" />
+          <InputGroup.Text id="basic-addon2">
+            <CloseButton />
+          </InputGroup.Text>
+        </InputGroup>;
+      })}
+      <TextInputWithLabel label="Stock" type="text" name="stock" value={form.stock} onChange={handleChange} placeholder="Insert Event Stock" />
 
       {/* Upload Image */}
       <FileInput controlId="formFileSm" label="Upload Event Banner" type="file" name="cover" onChange={handleChange} />
