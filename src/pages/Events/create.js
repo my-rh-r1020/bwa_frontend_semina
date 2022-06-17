@@ -1,7 +1,7 @@
 // Import Libraries
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/fetchData";
 
@@ -12,6 +12,7 @@ import EventsForm from "./form";
 
 // Import Redux
 import { setNotif } from "../../redux/notif/actions";
+import { fetchListCategories, fetchListSpeakers } from "../../redux/lists/actions";
 
 export default function EventsCreate() {
   const navigate = useNavigate(),
@@ -19,8 +20,47 @@ export default function EventsCreate() {
     // Use State
     [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
     [isLoading, setIsLoading] = useState(false),
-    [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: [""], status: "", stock: "", category: "", speaker: "" });
+    [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: [""], status: "", stock: "", category: "", speaker: "" }),
+    // Redux
+    lists = useSelector((state) => state.lists);
 
+  useEffect(() => {
+    dispatch(fetchListSpeakers());
+    dispatch(fetchListCategories());
+  }, [dispatch]);
+
+  // Handle Add Keypoint
+  const handlePlusKeypoint = () => {
+    let _temp = [...form.keypoint];
+    _temp.push("");
+
+    setForm({ ...form, keypoint: _temp });
+  };
+
+  // Handle Minus Keypoint
+  const handleMinusKeypoint = (index) => {
+    let _temp = [...form.keypoint],
+      removeIndex = _temp
+        .map((item, i) => {
+          return i;
+        })
+        .indexOf(index);
+
+    // Hapus Index Keypoint
+    _temp.splice(removeIndex, 1);
+
+    setForm({ ...form, keypoint: _temp });
+  };
+
+  // Handle Change Keypoint
+  const handleChangeKeypoint = (e, i) => {
+    let _temp = [...form.keypoint];
+    _temp[i] = e.target.value;
+
+    setForm({ ...form, keypoint: _temp });
+  };
+
+  // Handle Change
   const handleChange = (e) => {
     if (e.target.name === "cover") {
       if (e?.target?.files[0]?.type === "image/jpg" || e?.target?.files[0]?.type === "image/png" || e?.target?.files[0]?.type === "image/jpeg") {
@@ -67,7 +107,16 @@ export default function EventsCreate() {
       {alert.status && <Alerts variant={alert.variant} message={alert.message} />}
 
       {/* Form */}
-      <EventsForm form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} />
+      <EventsForm
+        form={form}
+        lists={lists}
+        handleChange={handleChange}
+        handleChangeKeypoint={handleChangeKeypoint}
+        handlePlusKeypoint={handlePlusKeypoint}
+        handleMinusKeypoint={handleMinusKeypoint}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+      />
     </Container>
   );
 }

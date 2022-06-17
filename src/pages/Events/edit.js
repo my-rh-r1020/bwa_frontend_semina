@@ -22,6 +22,30 @@ export default function EventsEdit() {
     [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
     [form, setForm] = useState({ title: "", price: "", date: "", cover: "", about: "", venueName: "", tagline: "", keypoint: "", status: "", stock: "", category: "", speaker: "" });
 
+  // Fetch Event Data
+  const fetchOneEvent = async () => {
+    const res = await getData(`api/v1/events/${eventsId}`);
+
+    setForm({
+      ...form,
+      title: res.data.data.title,
+      price: res.data.data.price,
+      date: res.data.data.date,
+      cover: `${config.api_image}/cover_event/${res.data.data.cover}`,
+      about: res.data.data.about,
+      venueName: res.data.data.venueName,
+      tagline: res.data.data.tagline,
+      keypoint: [res.data.data.keypoint],
+      status: res.data.data.status,
+      stock: res.data.data.stock,
+    });
+  };
+
+  useEffect(() => {
+    fetchOneEvent();
+  }, []);
+
+  // Handle Change
   const handleChange = (e) => {
     if (e.target.name === "cover") {
       if (e?.target?.files[0]?.type === "image/jpg" || e?.target?.files[0]?.type === "image/jpeg" || e?.target?.files[0]?.type === "image/png") {
@@ -41,29 +65,6 @@ export default function EventsEdit() {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
   };
-
-  // Fetch Event Data
-  const fetchOneEvent = async () => {
-    const res = await getData(`api/v1/events/${eventsId}`);
-
-    setForm({
-      ...form,
-      title: res.data.data.title,
-      price: res.data.data.price,
-      date: res.data.data.date,
-      cover: `${config.api_image}/cover_event/${res.data.data.cover}`,
-      about: res.data.data.about,
-      venueName: res.data.data.venueName,
-      tagline: res.data.data.tagline,
-      keypoint: res.data.data.keypoint,
-      status: res.data.data.status,
-      stock: res.data.data.stock,
-    });
-  };
-
-  useEffect(() => {
-    fetchOneEvent();
-  }, []);
 
   // Handle Update Data
   const handleSubmit = () => {};

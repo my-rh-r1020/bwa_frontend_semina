@@ -39,11 +39,6 @@ export default function Events() {
     dispatch(fetchListCategories());
   }, [dispatch]);
 
-  // Fetch List Speaker
-  // useEffect(() => {
-  //   dispatch(fetchListSpeakers());
-  // }, [dispatch]);
-
   // Prevent to signin page after login
   useEffect(() => {
     return () => {
@@ -89,11 +84,11 @@ export default function Events() {
         <Col>
           <SearchInput name="keyword" className="mb-4 col-lg" value={events.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Col>
-        {/* Filter SelectBox Categories */}
+        {/* Select Box Categories */}
         <Col>
           <SelectBox placeholder="Category Filters" name="category" handleChange={(e) => dispatch(setCategory(e))} options={lists.categories} value={events.categories} isClearable={true} />
         </Col>
-        {/* Filter SelectBox Speakers */}
+        {/* Select Box Speakers */}
         <Col>
           <SelectBox placeholder="Speaker Filters" name="speaker" handleChange={(e) => dispatch(setSpeaker(e))} options={lists.speakers} value={events.speaker} isClearable={true} />
         </Col>

@@ -1,29 +1,14 @@
 // Import Libraries
 import React, { useEffect } from "react";
-import { Button, CloseButton, Col, Figure, Form, FormControl, InputGroup, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { CloseButton, Col, Figure, Form, FormControl, InputGroup, Row } from "react-bootstrap";
 
 // Import Component
+import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
 import SelectBox from "../../components/SelectBox";
 import TextInputWithLabel from "../../components/TextInputWithLabel";
 
-// Import Redux
-import { setCategory, setSpeaker } from "../../redux/events/actions";
-import { fetchListCategories, fetchListSpeakers } from "../../redux/lists/actions";
-
-export default function EventsForm({ handleChange, handleSubmit, form, isLoading, edit }) {
-  const dispatch = useDispatch();
-
-  // Redux
-  const events = useSelector((state) => state.events),
-    lists = useSelector((state) => state.lists);
-
-  useEffect(() => {
-    dispatch(fetchListSpeakers());
-    dispatch(fetchListCategories());
-  }, [dispatch]);
-
+export default function EventsForm({ handleChange, handleSubmit, handleChangeKeypoint, handlePlusKeypoint, handleMinusKeypoint, form, isLoading, edit, lists }) {
   return (
     <Form>
       {/* Row 1 */}
@@ -31,9 +16,8 @@ export default function EventsForm({ handleChange, handleSubmit, form, isLoading
         <Col>
           <TextInputWithLabel label="Title" type="text" name="title" value={form.title} onChange={handleChange} placeholder="Insert Event Title" />
         </Col>
-
         <Col>
-          <TextInputWithLabel label="Event Date" type="date" name="date" value={form.date} onChange={handleChange} placeholder="Choose Event Date" />
+          <TextInputWithLabel label="Event Date" type="datetime-local" name="date" value={form.date} onChange={handleChange} placeholder="Choose Event Date" />
         </Col>
       </Row>
       {/* Row 2 */}
@@ -47,16 +31,32 @@ export default function EventsForm({ handleChange, handleSubmit, form, isLoading
       </Row>
 
       <TextInputWithLabel label="Description" type="text" name="about" value={form.about} onChange={handleChange} placeholder="Insert Event Description" />
-      <TextInputWithLabel label="Tagline" type="text" name="tagline" value={form.tagline} onChange={handleChange} placeholder="Insert Event Tagline" />
-      {form.keypoint.map((key, i) => {
-        <InputGroup className="mb-3" key={i}>
-          <FormControl placeholder="Insert Keypoint" aria-label="Keypoint" aria-describedby="basic-addon2" />
-          <InputGroup.Text id="basic-addon2">
-            <CloseButton />
-          </InputGroup.Text>
-        </InputGroup>;
-      })}
       <TextInputWithLabel label="Stock" type="text" name="stock" value={form.stock} onChange={handleChange} placeholder="Insert Event Stock" />
+      <TextInputWithLabel label="Tagline" type="text" name="tagline" value={form.tagline} onChange={handleChange} placeholder="Insert Event Tagline" />
+
+      {/* Keypoint */}
+      <Form.Label>Keypoint</Form.Label>
+      {form.keypoint.map((key, i) => (
+        <InputGroup className="mb-2" key={i}>
+          <FormControl
+            placeholder="Insert Keypoint"
+            value={key}
+            type="text"
+            name={key}
+            onChange={(e) => {
+              handleChangeKeypoint(e, i);
+            }}
+          />
+          {i !== 0 && (
+            <InputGroup.Text id="basic-addon2">
+              <CloseButton onClick={() => handleMinusKeypoint(i)} />
+            </InputGroup.Text>
+          )}
+        </InputGroup>
+      ))}
+      <Button className="mb-3" variant="outline-success" size="sm" action={handlePlusKeypoint}>
+        Add Keypoint
+      </Button>
 
       {/* Upload Image */}
       <FileInput controlId="formFileSm" label="Upload Event Banner" type="file" name="cover" onChange={handleChange} />
@@ -71,18 +71,18 @@ export default function EventsForm({ handleChange, handleSubmit, form, isLoading
 
       {/* Select Box */}
       <Row>
-        {/* Select Box Categories */}
+        {/* Categories */}
         <Col>
-          <SelectBox placeholder="Pilih Kategori" name="category" handleChange={(e) => dispatch(setCategory(e))} options={lists.categories} value={events.categories} isClearable={true} />
+          <SelectBox label={"Category"} placeholder="Pilih Category" name="category" handleChange={(e) => handleChange(e)} options={lists.categories} value={form.category} isClearable={true} />
         </Col>
-        {/* Select Box Speakers */}
+        {/* Speakers */}
         <Col>
-          <SelectBox placeholder="Pilih Pembicara" name="speaker" handleChange={(e) => dispatch(setSpeaker(e))} options={lists.speakers} value={events.speaker} isClearable={true} />
+          <SelectBox label={"Speaker"} placeholder="Pilih Speaker" name="speaker" handleChange={(e) => handleChange(e)} options={lists.speakers} value={form.speaker} isClearable={true} />
         </Col>
       </Row>
 
       {/* Button */}
-      <Button variant="outline-primary" size="sm" action={handleSubmit} isLoading={isLoading}>
+      <Button className="mt-3" variant="outline-primary" size="sm" action={handleSubmit} isLoading={isLoading}>
         {edit ? "Update" : "Save"}
       </Button>
     </Form>
