@@ -62,8 +62,9 @@ export default function EventsCreate() {
 
   // Handle Change
   const handleChange = (e) => {
+    // Cek File Image
     if (e.target.name === "cover") {
-      if (e?.target?.files[0]?.type === "image/jpg" || e?.target?.files[0]?.type === "image/png" || e?.target?.files[0]?.type === "image/jpeg") {
+      if (e?.target?.files[0]?.type === "image/png" || e?.target?.files[0]?.type === "image/jpeg" || e?.target?.files[0]?.type === "image/jpg") {
         var size = parseFloat(e.target.files[0].size / 3145728).toFixed(2);
         // Cek Size Image
         if (size < 2) {
@@ -73,7 +74,7 @@ export default function EventsCreate() {
           setForm({ ...form, file: "", [e.target.name]: "" });
         }
       } else {
-        setAlert({ status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
+        setAlert({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
         setForm({ ...form, file: "", [e.target.name]: "" });
       }
     } else {
@@ -85,14 +86,30 @@ export default function EventsCreate() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const res = await postData("api/v1/events");
+      // Setup Form Data
+      const formData = new FormData();
 
-      dispatch(setNotif(true, "success", `Successfully added event for ${res.data.data.name}`));
+      formData.append("title", form.title);
+      formData.append("price", form.price);
+      formData.append("date", form.date);
+      formData.append("cover", form.file);
+      formData.append("about", form.about);
+      formData.append("venueName", form.venueName);
+      formData.append("tagline", form.tagline);
+      formData.append("keypoint", JSON.stringify(form.keypoint));
+      formData.append("status", true);
+      formData.append("stock", form.stock);
+      formData.append("category", form.category.value);
+      formData.append("speaker", form.speaker.value);
+
+      const res = await postData("api/v1/events", formData, true);
+
+      dispatch(setNotif(true, "success", `Successfully added event for ${res.data.data.title}`));
       navigate("/events");
       setIsLoading(true);
     } catch (err) {
       setIsLoading(false);
-      setAlert({ ...alert, status: true, variant: "danger", message: err.respon.data.msg });
+      setAlert({ ...alert, status: true, variant: "danger", message: err.response.data.msg });
     }
   };
 

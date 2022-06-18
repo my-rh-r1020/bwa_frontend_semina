@@ -31,7 +31,7 @@ export default function EventsForm({ handleChange, handleSubmit, handleChangeKey
       </Row>
 
       <TextInputWithLabel label="Description" type="text" name="about" value={form.about} onChange={handleChange} placeholder="Insert Event Description" />
-      <TextInputWithLabel label="Stock" type="text" name="stock" value={form.stock} onChange={handleChange} placeholder="Insert Event Stock" />
+      <TextInputWithLabel label="Stock" type="number" name="stock" value={form.stock} onChange={handleChange} placeholder="Insert Event Stock" />
       <TextInputWithLabel label="Tagline" type="text" name="tagline" value={form.tagline} onChange={handleChange} placeholder="Insert Event Tagline" />
 
       {/* Keypoint */}

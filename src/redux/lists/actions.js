@@ -45,6 +45,7 @@ export const fetchListCategories = () => {
       let res = await debouncedFetchListsCategories("api/v1/categories"),
         _temp = [];
 
+      // Convert to Objek Data
       res.data.data.forEach((res) => {
         _temp.push({ value: res._id, label: res.name, target: { value: res._id, name: "category" } });
       });
