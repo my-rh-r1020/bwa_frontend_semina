@@ -4,11 +4,11 @@ import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/fetchData";
+import EventsForm from "./form";
 
 // Import Components
 import Alerts from "../../components/Alerts";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import EventsForm from "./form";
 
 // Import Redux
 import { setNotif } from "../../redux/notif/actions";
@@ -24,6 +24,7 @@ export default function EventsCreate() {
     // Redux
     lists = useSelector((state) => state.lists);
 
+  // UseEffect List Categories & Speaker
   useEffect(() => {
     dispatch(fetchListSpeakers());
     dispatch(fetchListCategories());
