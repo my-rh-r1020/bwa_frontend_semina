@@ -78,6 +78,8 @@ export default function EventsCreate() {
         setAlert({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
         setForm({ ...form, file: "", [e.target.name]: "" });
       }
+    } else if (e.target.name === "category" || e.target.name === "speaker") {
+      setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }

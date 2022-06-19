@@ -57,7 +57,9 @@ export default function EventsEdit() {
       keypoint: res.data.data.keypoint,
       status: res.data.data.status,
       stock: res.data.data.stock,
-      category: { value: res?.data?.data?.category?._id, lable: res?.data?.data?.category?.name, target: { value: res?.data?.data?.category?._id, name: "category" } },
+      // Get Selected Event Category API
+      category: { value: res?.data?.data?.category?._id, label: res?.data?.data?.category?.name, target: { value: res?.data?.data?.category?._id, name: "category" } },
+      // Get Selected Event Speaker API
       speaker: res.data.data.speaker,
     });
   };
@@ -108,6 +110,8 @@ export default function EventsEdit() {
         setAlert({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
         setForm({ ...form, file: "", [e.target.name]: "" });
       }
+    } else if (e.target.name === "category" || e.target.name === "speaker") {
+      setForm({ ...form, [e.target.name]: e });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
