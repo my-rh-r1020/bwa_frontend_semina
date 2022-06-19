@@ -12,11 +12,11 @@ function ComponentNavbar({ bg, variant }) {
       <Container>
         <Navbar.Brand href="#home">Dashboard</Navbar.Brand>
         <Nav className="me-auto">
-          <NavLink action={() => navigate("/categories")}>Categories</NavLink>
-          <NavLink action={() => navigate("/speakers")}>Speakers</NavLink>
+          <NavLink action={() => navigate("/categories")}>Kategori</NavLink>
+          <NavLink action={() => navigate("/speakers")}>Pembicara</NavLink>
           <NavLink action={() => navigate("/events")}>Event</NavLink>
-          <NavLink action={() => navigate("/participant")}>Participant</NavLink>
-          <NavLink action={() => navigate("/transactions")}>Transactions</NavLink>
+          <NavLink action={() => navigate("/participants")}>Peserta</NavLink>
+          <NavLink action={() => navigate("/transactions")}>Transaksi</NavLink>
         </Nav>
         <Nav>{!isSignin && <NavLink action={() => navigate("/signin")}>Sign In</NavLink>}</Nav>
         <Nav>{isSignin && <NavLink href="#">Username</NavLink>}</Nav>
