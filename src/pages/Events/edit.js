@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import { config } from "../../config";
 import { getData, putData } from "../../utils/fetchData";
 import EventsForm from "./form";
+import moment from "moment";
 
 // Import Components
 import Alerts from "../../components/Alerts";
@@ -22,7 +23,7 @@ export default function EventsEdit() {
     // Use State
     [isLoading, setIsLoading] = useState(false),
     [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
-    [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: "", status: "", stock: "", category: "", speaker: "" }),
+    [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: [""], status: "", stock: "", category: "", speaker: "" }),
     // Redux
     lists = useSelector((state) => state.lists);
 
@@ -45,7 +46,10 @@ export default function EventsEdit() {
       ...form,
       title: res.data.data.title,
       price: res.data.data.price,
-      date: res.data.data.date,
+      // Get Event Date API
+      date: moment(res.data.data.date).format("YYYY-MM-DDTHH:SS"),
+      file: "",
+      // Get Event Cover API
       cover: `${config.api_image}/cover_event/${res.data.data.cover}`,
       about: res.data.data.about,
       venueName: res.data.data.venueName,
@@ -53,6 +57,8 @@ export default function EventsEdit() {
       keypoint: res.data.data.keypoint,
       status: res.data.data.status,
       stock: res.data.data.stock,
+      category: { value: res?.data?.data?.category?._id, lable: res?.data?.data?.category?.name, target: { value: res?.data?.data?.category?._id, name: "category" } },
+      speaker: res.data.data.speaker,
     });
   };
 
@@ -65,7 +71,17 @@ export default function EventsEdit() {
   };
 
   // Handle Minus Keypoint
-  const handleMinusKeypoint = () => {};
+  const handleMinusKeypoint = (index) => {
+    let _temp = [...form.keypoint],
+      removeIndex = _temp.map((item, i) => {
+        return i;
+      });
+
+    // Hapus Index Keypoint
+    _temp.splice(removeIndex, 1);
+
+    setForm({ ...form, keypoint: _temp });
+  };
 
   // Handle Change Keypoint
   const handleChangeKeypoint = (e, i) => {

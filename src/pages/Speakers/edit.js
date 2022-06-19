@@ -47,7 +47,13 @@ export default function SpeakersEdit() {
   const fetchOneSpeakers = async () => {
     const res = await getData(`api/v1/speakers/${speakersId}`);
 
-    setForm({ ...form, name: res.data.data.name, role: res.data.data.role, avatar: `${config.api_image}/avatar/${res.data.data.avatar}` });
+    setForm({
+      ...form,
+      name: res.data.data.name,
+      role: res.data.data.role,
+      // Get Speaker Avatar API
+      avatar: `${config.api_image}/avatar/${res.data.data.avatar}`,
+    });
   };
 
   useEffect(() => {
