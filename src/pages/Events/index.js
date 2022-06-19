@@ -17,6 +17,7 @@ import Table from "../../components/TableWithAction";
 import { fetchEvents, setKeyword, setCategory, setSpeaker } from "../../redux/events/actions";
 import { fetchListCategories, fetchListSpeakers } from "../../redux/lists/actions";
 import { setNotif } from "../../redux/notif/actions";
+import { deleteData } from "../../utils/fetchData";
 
 export default function Events() {
   const navigate = useNavigate(),
@@ -58,15 +59,15 @@ export default function Events() {
       confirmButtonText: "Delete",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // const res = await deleteData(`api/v1/speakers/${id}`);
+        const res = await deleteData(`api/v1/events/${id}`);
         Swal.fire({
           position: "center",
           icon: "success",
-          //   title: `Speakers ${res.data.data.name} has been deleted.`,
+          title: `Events ${res.data.data.title} has been deleted.`,
           showConfirmButton: false,
           timer: 1500,
         });
-        // dispatch(fetchEvents());
+        dispatch(fetchEvents());
       }
     });
   };

@@ -22,7 +22,7 @@ export default function EventsEdit() {
     { eventsId } = useParams(),
     // Use State
     [isLoading, setIsLoading] = useState(false),
-    [alert, setAlert] = useState({ status: false, variant: "", message: "" }),
+    [alert, setAlerts] = useState({ status: false, variant: "", message: "" }),
     [form, setForm] = useState({ title: "", price: "", date: "", file: "", cover: "", about: "", venueName: "", tagline: "", keypoint: [""], status: "", stock: "", category: "", speaker: "" }),
     // Redux
     lists = useSelector((state) => state.lists);
@@ -48,7 +48,7 @@ export default function EventsEdit() {
       price: res.data.data.price,
       // Get Event Date API
       date: moment(res.data.data.date).format("YYYY-MM-DDTHH:SS"),
-      file: "",
+      file: `${config.api_image}/cover_event/${res.data.data.cover}`,
       // Get Event Cover API
       cover: `${config.api_image}/cover_event/${res.data.data.cover}`,
       about: res.data.data.about,
@@ -60,7 +60,7 @@ export default function EventsEdit() {
       // Get Selected Event Category API
       category: { value: res?.data?.data?.category?._id, label: res?.data?.data?.category?.name, target: { value: res?.data?.data?.category?._id, name: "category" } },
       // Get Selected Event Speaker API
-      speaker: res.data.data.speaker,
+      speaker: { value: res?.data?.data?.speaker?._id, label: res?.data?.data?.speaker?.name, target: { value: res?.data?.data?.speaker?._id, name: "speaker" } },
     });
   };
 
@@ -103,11 +103,11 @@ export default function EventsEdit() {
         if (size < 2) {
           setForm({ ...form, file: e.target.files[0], [e.target.name]: URL.createObjectURL(e.target.files[0]) });
         } else {
-          setAlert({ ...alert, status: true, variant: "danger", message: "Your image size must less than 3 MB" });
+          setAlerts({ ...alert, status: true, variant: "danger", message: "Your image size must less than 3 MB" });
           setForm({ ...form, file: "", [e.target.name]: "" });
         }
       } else {
-        setAlert({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
+        setAlerts({ ...alert, status: true, variant: "danger", message: "Image type only PNG | JPG | JPEG" });
         setForm({ ...form, file: "", [e.target.name]: "" });
       }
     } else if (e.target.name === "category" || e.target.name === "speaker") {
@@ -119,16 +119,32 @@ export default function EventsEdit() {
 
   // Handle Update Data
   const handleSubmit = async () => {
-    setIsLoading(false);
+    setIsLoading(true);
     try {
-      const res = await putData(`api/v1/events/${eventsId}`);
+      // Setup Form Data Update
+      const formData = new FormData();
+
+      formData.append("title", form.title);
+      formData.append("price", form.price);
+      formData.append("date", form.date);
+      formData.append("cover", form.file);
+      formData.append("about", form.about);
+      formData.append("venueName", form.venueName);
+      formData.append("tagline", form.tagline);
+      formData.append("keypoint", JSON.stringify(form.keypoint));
+      formData.append("status", true);
+      formData.append("stock", form.stock);
+      formData.append("category", form.category.value);
+      formData.append("speaker", form.speaker.value);
+
+      const res = await putData(`api/v1/events/${eventsId}`, formData, true);
 
       dispatch(setNotif(true, "success", `Successfully update event for ${res.data.data.title}`));
       navigate("/events");
       setIsLoading(true);
     } catch (err) {
       setIsLoading(false);
-      setAlert({ ...alert, status: true, variant: "danger", message: err.response.data.msg });
+      setAlerts({ ...alert, status: true, variant: "danger", message: err.response.data.msg });
     }
   };
 
@@ -144,6 +160,7 @@ export default function EventsEdit() {
 
       {/* Form */}
       <EventsForm
+        edit
         form={form}
         lists={lists}
         handleChange={handleChange}
