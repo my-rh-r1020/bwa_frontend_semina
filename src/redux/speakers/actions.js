@@ -25,16 +25,13 @@ export const errorFetchingSpeakers = () => {
 export const fetchSpeakers = () => {
   return async (dispatch, getState) => {
     dispatch(startFetchingSpeakers());
-
     try {
       setTimeout(() => {
         dispatch(clearNotif());
       }, 5000);
 
       // Set Filter / Keyword
-      let params = {
-        keyword: getState().speakers.keyword,
-      };
+      let params = { keyword: getState().speakers.keyword };
 
       let res = await debounceFetchSpeakers("api/v1/speakers", params);
 

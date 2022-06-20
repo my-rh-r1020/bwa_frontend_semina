@@ -15,6 +15,7 @@ import SpeakersEdit from "./pages/Speakers/edit";
 import Events from "./pages/Events";
 import EventsCreate from "./pages/Events/create";
 import EventsEdit from "./pages/Events/edit";
+import Participants from "./pages/Participants";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -116,6 +117,9 @@ function App() {
         <Route path="events" element={<Events />} />
         <Route path="events/create" element={<EventsCreate />} />
         <Route path="events/edit/:eventsId" element={<EventsEdit />} />
+
+        {/* Participants */}
+        <Route path="participants" element={<Participants />} />
       </Routes>
     </BrowserRouter>
   );

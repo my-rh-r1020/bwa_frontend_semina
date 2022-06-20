@@ -29,7 +29,6 @@ export const errorFetchingCategories = () => {
 export const fetchCategories = () => {
   return async (dispatch) => {
     dispatch(startFetchingCategories());
-
     try {
       setTimeout(() => {
         dispatch(clearNotif());

@@ -6,7 +6,7 @@ import { clearNotif } from "../notif/actions";
 
 let debouncedFetchEvents = debounce(getData, 1000);
 
-// Start Fecthing Data
+// Start Fetching Data
 export const startFetchingEvents = () => {
   return { type: START_FETCHING_EVENTS };
 };
