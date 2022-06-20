@@ -10,7 +10,7 @@ export default function SelectBox({ name, options, isClearable, value, placehold
   return (
     <Form.Group className="mb-2">
       {label && <Form.Label>{label}</Form.Label>}
-      <Select defaultValue={value} name={name} isClearable={isClearable} placeholder={placeholder} options={options} onChange={handleChange} value={value} />
+      <Select name={name} isClearable={isClearable} placeholder={placeholder} options={options} onChange={handleChange} value={value} />
     </Form.Group>
   );
 }

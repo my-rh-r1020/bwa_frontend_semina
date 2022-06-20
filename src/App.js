@@ -16,6 +16,7 @@ import Events from "./pages/Events";
 import EventsCreate from "./pages/Events/create";
 import EventsEdit from "./pages/Events/edit";
 import Participants from "./pages/Participants";
+import Transactions from "./pages/Transactions";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -120,6 +121,9 @@ function App() {
 
         {/* Participants */}
         <Route path="participants" element={<Participants />} />
+
+        {/* Transactions */}
+        <Route path="transactions" element={<Transactions />} />
       </Routes>
     </BrowserRouter>
   );

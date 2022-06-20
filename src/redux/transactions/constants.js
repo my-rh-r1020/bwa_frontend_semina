@@ -1,0 +1,9 @@
+export const START_FETCHING_TRANSACTIONS = "redux/transactions/START_FETCHING_TRANSACTIONS",
+  SUCCESS_FETCHING_TRANSACTIONS = "redux/transactions/SUCCESS_FETCHING_TRANSACTIONS",
+  ERROR_FETCHING_TRANSACTIONS = "redux/transactions/ERROR_FETCHING_TRANSACTIONS",
+  SET_EVENT = "redux/transactions/SET_EVENT",
+  SET_PAYMENT = "redux/transactions/SET_PAYMENT",
+  SET_PARTICIPANT = "redux/transactions/SET_PARTICIPANT",
+  SET_KEYWORD_TRANSACTIONS = "redux/transactions/SET_KEYWORD_TRANSACTIONS",
+  SET_STARTDATE = "redux/transactions/SET_STARTDATE",
+  SET_ENDDATE = "redux/transactions/SET_ENDDATE";
