@@ -11,7 +11,7 @@ import SearchInput from "../../components/SearchInput";
 import Table from "../../components/TableWithAction";
 
 // Import Redux
-import { fetchTransactions } from "../../redux/transactions/actions";
+import { fetchTransactions, setKeyword } from "../../redux/transactions/actions";
 
 export default function Transactions() {
   const dispatch = useDispatch(),
@@ -25,10 +25,14 @@ export default function Transactions() {
   // Fetch Transactions
   useEffect(() => {
     fetchTransactions();
-  }, [dispatch]);
+  }, [dispatch, transactions.keyword]);
 
-  // Handle Delete
-  const handleDelete = (id) => {};
+  // Prevent to signin page after login
+  useEffect(() => {
+    return () => {
+      if (!user.token) return navigate("/signin");
+    };
+  });
 
   return (
     <Container>
@@ -39,10 +43,10 @@ export default function Transactions() {
       {notif.status && <Alerts variant={notif.variant} message={notif.message} />}
 
       {/* Search */}
-      <SearchInput name="keyword" />
+      <SearchInput name="keyword" className="mb-4 col-lg" value={transactions.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
 
       {/* Table */}
-      <Table status={transactions.status} thead={["Personal Detail", "Participant", "Event", "Payment", "Aksi"]} data={transactions.data} tbody={["personalDetail", "participant", "event", "payment"]} />
+      <Table status={transactions.status} thead={["Name", "Email", "Event", "Jadwal", "Venue"]} data={transactions.data} tbody={["name", "email", "title", "date", "venueName"]} />
     </Container>
   );
 }

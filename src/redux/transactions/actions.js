@@ -1,4 +1,4 @@
-import { START_FETCHING_TRANSACTIONS, SUCCESS_FETCHING_TRANSACTIONS, ERROR_FETCHING_TRANSACTIONS, SET_KEYWORD_TRANSACTIONS, SET_EVENT, SET_PAYMENT, SET_PARTICIPANT, SET_STARTDATE, SET_ENDDATE } from "./constants";
+import { START_FETCHING_TRANSACTIONS, SUCCESS_FETCHING_TRANSACTIONS, ERROR_FETCHING_TRANSACTIONS, SET_KEYWORD_TRANSACTIONS, SET_DATE, SET_PAGE } from "./constants";
 
 import debounce from "debounce-promise";
 import { getData } from "../../utils/fetchData";
@@ -12,8 +12,8 @@ export const startFetchingTransactions = () => {
 };
 
 // Success Fetching Data
-export const successFetchingTransactions = ({ transactions }) => {
-  return { type: SUCCESS_FETCHING_TRANSACTIONS, transactions };
+export const successFetchingTransactions = ({ transactions, pages }) => {
+  return { type: SUCCESS_FETCHING_TRANSACTIONS, transactions, pages };
 };
 
 // Error Fetching Data
@@ -31,11 +31,24 @@ export const fetchTransactions = () => {
       }, 5000);
 
       // Set Filter / Keyword
-      let params = { keyword: getState().transactions.keyword };
+      let params = {
+        keyword: getState().transactions.keyword,
+        event: getState().transactions.event,
+        page: getState().transactions?.page || 1,
+        limit: getState().transactions?.limit || 10,
+        // startDate: getState().transactions?.date.startDate,
+        // endDate: getState().transactions?.date.endDate,
+      };
 
       let res = await debouncedFetchTransactions("api/v1/transactions", params);
 
-      dispatch(successFetchingTransactions({ transactions: res.data.data }));
+      const _temp = [];
+
+      res.data.data.forEach((res) => {
+        _temp.push({ name: `${res.personalDetail.firstName} ${res.personalDetail.lastName}`, email: res.personalDetail.email, title: res.historyEvent.title, date: res.historyEvent.date, venueName: res.historyEvent.venueName });
+      });
+
+      dispatch(successFetchingTransactions({ transactions: _temp, pages: res.data.pages }));
     } catch (err) {
       dispatch(errorFetchingTransactions());
     }
@@ -47,17 +60,12 @@ export const setKeyword = (keyword) => {
   return { type: SET_KEYWORD_TRANSACTIONS, keyword };
 };
 
-// Event
-export const setEvent = (event) => {
-  return { type: SET_EVENT, event };
+// Date
+export const setDate = (date) => {
+  return { type: SET_DATE, date };
 };
 
-// Payment
-export const setPayment = (payment) => {
-  return { type: SET_PAYMENT, payment };
-};
-
-// Participants
-export const setParticipant = (participant) => {
-  return { type: SET_PARTICIPANT, participant };
+// Page
+export const setPage = (page) => {
+  return { type: SET_PAGE, page };
 };
