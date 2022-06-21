@@ -61,8 +61,8 @@ export const setKeyword = (keyword) => {
 };
 
 // Date
-export const setDate = (date) => {
-  return { type: SET_DATE, date };
+export const setDate = (ranges) => {
+  return { type: SET_DATE, ranges };
 };
 
 // Page

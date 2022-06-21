@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { formatDate } from "../../utils/formatDate";
 
 // Import Components
 import Breadcrumbs from "../../components/Breadcrumbs";
@@ -10,13 +11,16 @@ import Alerts from "../../components/Alerts";
 import SearchInput from "../../components/SearchInput";
 import Table from "../../components/TableWithAction";
 import SelectBox from "../../components/SelectBox";
+import DateRange from "../../components/InputDate";
 
 // Import Redux
-import { fetchTransactions, setKeyword, setPage, setEvent } from "../../redux/transactions/actions";
+import { fetchTransactions, setKeyword, setPage, setEvent, setDate } from "../../redux/transactions/actions";
+import { fetchListEvents } from "../../redux/lists/actions";
 
 export default function Transactions() {
   const dispatch = useDispatch(),
     navigate = useNavigate();
+  let [isShowed, setIsShowed] = React.useState(false);
 
   // Redux
   const user = useSelector((state) => state.auth),
@@ -24,10 +28,18 @@ export default function Transactions() {
     notif = useSelector((state) => state.notif),
     lists = useSelector((state) => state.lists);
 
+  // Display Date
+  const displayDate = `${transactions.date?.startDate ? formatDate(transactions.date?.startDate) : ""}${transactions.date?.endDate ? " - " + formatDate(transactions.date.endDate) : ""}`;
+
   // Fetch Transactions
   useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch, transactions.keyword, transactions.page, transactions.event]);
+
+  // Fetch List Events
+  useEffect(() => {
+    dispatch(fetchListEvents());
+  }, [dispatch]);
 
   // Prevent to signin page after login
   useEffect(() => {
@@ -52,6 +64,10 @@ export default function Transactions() {
         {/* Select Box Categories */}
         <Col>
           <SelectBox placeholder="Event Filters" name="event" handleChange={(e) => dispatch(setEvent(e))} options={lists.events} value={transactions.event} isClearable={true} />
+        </Col>
+        <Col className="cursor-pointer position-relative" onClick={() => setIsShowed(true)}>
+          <SearchInput disabled query={displayDate} />
+          {isShowed ? <DateRange date={transactions.date} setIsShowed={() => setIsShowed(!isShowed)} onChangeDate={(ranges) => dispatch(setDate(ranges))} /> : ""}
         </Col>
       </Row>
 

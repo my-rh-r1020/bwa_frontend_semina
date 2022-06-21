@@ -34,7 +34,7 @@ export default function Events() {
     dispatch(fetchEvents());
   }, [dispatch, events.keyword, events.category, events.speaker]);
 
-  // Fetch List Category
+  // Fetch List Speaker + Category
   useEffect(() => {
     dispatch(fetchListSpeakers());
     dispatch(fetchListCategories());

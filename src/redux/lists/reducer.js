@@ -11,7 +11,7 @@ import {
 } from "./constants";
 
 const statusList = { idle: "idle", process: "process", success: "success", error: "error" },
-  initialState = { categories: [], statusCategories: statusList.idle, speakers: [], statusSpeakers: statusList.idle };
+  initialState = { categories: [], statusCategories: statusList.idle, speakers: [], statusSpeakers: statusList.idle, events: [], statusEvents: statusList.idle };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -36,6 +36,14 @@ export default function reducer(state = initialState, action) {
       return { ...state, statusSpeakers: statusList.error };
 
     // List Events
+    case START_FETCHING_LISTS_EVENTS:
+      return { ...state, statusEvents: statusList.process };
+
+    case SUCCESS_FETCHING_LISTS_EVENTS:
+      return { ...state, statusEvents: statusList.success, events: action.events };
+
+    case ERROR_FETCHING_LISTS_EVENTS:
+      return { ...state, statusEvents: statusList.error };
 
     default:
       return state;

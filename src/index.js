@@ -7,6 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 // Import React Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Import React DatePicker
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+
 // Import Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
