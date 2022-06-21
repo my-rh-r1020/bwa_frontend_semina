@@ -83,7 +83,7 @@ export default function Events() {
       <Row>
         {/* Search */}
         <Col>
-          <SearchInput name="keyword" className="mb-4 col-lg" value={events.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
+          <SearchInput name="keyword" className="mb-4 col-lg" query={events.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
         </Col>
         {/* Select Box Categories */}
         <Col>

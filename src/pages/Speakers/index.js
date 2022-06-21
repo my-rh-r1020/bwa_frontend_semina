@@ -73,7 +73,7 @@ function Speakers() {
       {notif.status && <Alerts variant={notif.variant} message={notif.message} />}
 
       {/* Search */}
-      <SearchInput name="keyword" className="mb-4 col-lg-6" value={speakers.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
+      <SearchInput name="keyword" className="mb-4 col-lg-6" query={speakers.keyword} handleChange={(e) => dispatch(setKeyword(e.target.value))} />
 
       {/* Button Add */}
       <Button variant="outline-primary" size="sm" action={() => navigate("/speakers/create")}>

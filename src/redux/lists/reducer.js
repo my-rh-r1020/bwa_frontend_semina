@@ -1,4 +1,14 @@
-import { START_FETCHING_LISTS_CATEGORIES, SUCCESS_FETCHING_LISTS_CATEGORIES, ERROR_FETCHING_LISTS_CATEGORIES, START_FETCHING_LISTS_SPEAKERS, SUCCESS_FETCHING_LISTS_SPEAKERS, ERROR_FETCHING_LISTS_SPEAKERS } from "./constants";
+import {
+  START_FETCHING_LISTS_CATEGORIES,
+  SUCCESS_FETCHING_LISTS_CATEGORIES,
+  ERROR_FETCHING_LISTS_CATEGORIES,
+  START_FETCHING_LISTS_SPEAKERS,
+  SUCCESS_FETCHING_LISTS_SPEAKERS,
+  ERROR_FETCHING_LISTS_SPEAKERS,
+  START_FETCHING_LISTS_EVENTS,
+  SUCCESS_FETCHING_LISTS_EVENTS,
+  ERROR_FETCHING_LISTS_EVENTS,
+} from "./constants";
 
 const statusList = { idle: "idle", process: "process", success: "success", error: "error" },
   initialState = { categories: [], statusCategories: statusList.idle, speakers: [], statusSpeakers: statusList.idle };
@@ -24,6 +34,8 @@ export default function reducer(state = initialState, action) {
 
     case ERROR_FETCHING_LISTS_SPEAKERS:
       return { ...state, statusSpeakers: statusList.error };
+
+    // List Events
 
     default:
       return state;

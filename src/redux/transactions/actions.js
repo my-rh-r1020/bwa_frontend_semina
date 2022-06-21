@@ -1,4 +1,4 @@
-import { START_FETCHING_TRANSACTIONS, SUCCESS_FETCHING_TRANSACTIONS, ERROR_FETCHING_TRANSACTIONS, SET_KEYWORD_TRANSACTIONS, SET_DATE, SET_PAGE } from "./constants";
+import { START_FETCHING_TRANSACTIONS, SUCCESS_FETCHING_TRANSACTIONS, ERROR_FETCHING_TRANSACTIONS, SET_KEYWORD_TRANSACTIONS, SET_DATE, SET_PAGE, SET_EVENT } from "./constants";
 
 import debounce from "debounce-promise";
 import { getData } from "../../utils/fetchData";
@@ -33,7 +33,7 @@ export const fetchTransactions = () => {
       // Set Filter / Keyword
       let params = {
         keyword: getState().transactions.keyword,
-        event: getState().transactions.event,
+        event: getState().transactions?.event?.value || "",
         page: getState().transactions?.page || 1,
         limit: getState().transactions?.limit || 10,
         // startDate: getState().transactions?.date.startDate,
@@ -68,4 +68,9 @@ export const setDate = (date) => {
 // Page
 export const setPage = (page) => {
   return { type: SET_PAGE, page };
+};
+
+// Event
+export const setEvent = (event) => {
+  return { type: SET_EVENT, event };
 };
