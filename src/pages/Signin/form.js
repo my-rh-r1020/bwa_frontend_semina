@@ -10,8 +10,8 @@ export default function FormSignin({ form, handleChange, handleSubmit, isLoading
     <Form>
       <TextInputWithLabel label={"Email"} type="email" name="email" value={form.email} onChange={handleChange} placeholder={"Insert Your Email"} />
       <TextInputWithLabel label={"Password"} type="password" name="password" value={form.password} onChange={handleChange} placeholder={"Insert Your Password"} />
-      <Button variant="outline-primary" action={handleSubmit} loading={isLoading}>
-        Submit
+      <Button variant="outline-primary" size="sm" action={handleSubmit} loading={isLoading}>
+        Sign In
       </Button>
     </Form>
   );

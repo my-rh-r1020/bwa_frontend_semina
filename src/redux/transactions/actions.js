@@ -1,6 +1,7 @@
 import { START_FETCHING_TRANSACTIONS, SUCCESS_FETCHING_TRANSACTIONS, ERROR_FETCHING_TRANSACTIONS, SET_KEYWORD_TRANSACTIONS, SET_DATE, SET_PAGE, SET_EVENT } from "./constants";
 
 import debounce from "debounce-promise";
+import moment from "moment";
 import { getData } from "../../utils/fetchData";
 import { clearNotif } from "../notif/actions";
 
@@ -36,8 +37,8 @@ export const fetchTransactions = () => {
         event: getState().transactions?.event?.value || "",
         page: getState().transactions?.page || 1,
         limit: getState().transactions?.limit || 10,
-        // startDate: getState().transactions?.date.startDate,
-        // endDate: getState().transactions?.date.endDate,
+        startDate: moment(getState().transactions?.date?.startDate).format("YYYY-MM-DD"),
+        endDate: moment(getState().transactions?.date?.endDate).format("YYYY-MM=DD"),
       };
 
       let res = await debouncedFetchTransactions("api/v1/transactions", params);

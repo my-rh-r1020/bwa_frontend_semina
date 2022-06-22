@@ -34,7 +34,7 @@ export default function Transactions() {
   // Fetch Transactions
   useEffect(() => {
     dispatch(fetchTransactions());
-  }, [dispatch, transactions.keyword, transactions.page, transactions.event]);
+  }, [dispatch, transactions.keyword, transactions.page, transactions.event, transactions.date]);
 
   // Fetch List Events
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Transactions() {
         </Col>
         <Col className="cursor-pointer position-relative" onClick={() => setIsShowed(true)}>
           <SearchInput disabled query={displayDate} />
-          {isShowed ? <DateRange date={transactions.date} setIsShowed={() => setIsShowed(!isShowed)} onChangeDate={(ranges) => dispatch(setDate(ranges))} /> : ""}
+          {isShowed ? <DateRange date={transactions.date} setIsShowed={() => setIsShowed(!isShowed)} onChangeDate={(ranges) => dispatch(setDate(ranges.selection))} /> : ""}
         </Col>
       </Row>
 

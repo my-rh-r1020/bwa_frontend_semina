@@ -17,6 +17,7 @@ import EventsCreate from "./pages/Events/create";
 import EventsEdit from "./pages/Events/edit";
 import Participants from "./pages/Participants";
 import Transactions from "./pages/Transactions";
+import PageSignout from "./pages/Signout";
 
 // Import Listener
 import { listen } from "./redux/listener";
@@ -101,8 +102,8 @@ function App() {
     <BrowserRouter>
       <Navbar bg="dark" variant="dark" />
       <Routes>
-        {/* Signin */}
-        <Route path="/signin" element={<PageSignin />} />
+        {/* Sign In */}
+        <Route path="signin" element={<PageSignin />} />
 
         {/* Categories */}
         <Route path="categories" element={<Categories />} />
@@ -124,6 +125,9 @@ function App() {
 
         {/* Transactions */}
         <Route path="transactions" element={<Transactions />} />
+
+        {/* Sign Out */}
+        <Route path="signout" element={<PageSignout />} />
       </Routes>
     </BrowserRouter>
   );

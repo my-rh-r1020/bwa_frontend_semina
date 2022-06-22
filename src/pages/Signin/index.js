@@ -191,10 +191,9 @@ function PageSignin() {
           toast.addEventListener("mouseleave", Swal.resumeTimer);
         },
       });
-
       Toast.fire({
         icon: "success",
-        title: "Signed in successfully",
+        title: "Successfully Sign in",
       });
 
       // Navigasi
@@ -231,7 +230,7 @@ function PageSignin() {
         <Card.Body>
           {/* Alerts */}
           {alert.status && <AlertMessage variant={alert.type} message={alert.message} />}
-          <Card.Title className="text-center mt-3 mb-3">Form Signin</Card.Title>
+          <Card.Title className="text-center mt-3 mb-3">Login Here</Card.Title>
           {/* Form */}
           <Form form={form} handleChange={handleChange} handleSubmit={handleSubmit} isLoading={isLoading} alert={alert} />
         </Card.Body>
