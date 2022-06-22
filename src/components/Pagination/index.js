@@ -4,8 +4,8 @@ import ReactPaginate from "react-paginate";
 export default function ComponentPagination({ page = 1, handlePageClick, pages }) {
   return (
     <ReactPaginate
-      previousLabel="previous"
-      nextLabel="next"
+      previousLabel="<"
+      nextLabel=">"
       breakLabel={
         <span role="button" className="page-link">
           ...

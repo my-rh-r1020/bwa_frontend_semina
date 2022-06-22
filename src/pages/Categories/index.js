@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 
 // Import Components
-import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 // import SearchInput from "../../components/SearchInput";
@@ -93,7 +92,7 @@ function Categories() {
         tbody={["name"]}
         editUrl={"/categories/edit"}
         deleteAction={(id) => handleDelete(id)}
-        pages={categories.page}
+        pages={categories.pages}
         handlePageClick={({ selected }) => dispatch(setPage(selected + 1))}
       />
     </Container>
