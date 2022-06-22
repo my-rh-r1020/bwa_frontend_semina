@@ -14,7 +14,7 @@ import Table from "../../components/TableWithAction";
 import Alerts from "../../components/Alerts";
 
 // Import Redux
-import { fetchCategories } from "../../redux/categories/actions";
+import { fetchCategories, setPage } from "../../redux/categories/actions";
 import { setNotif } from "../../redux/notif/actions";
 import { deleteData } from "../../utils/fetchData";
 
@@ -28,9 +28,10 @@ function Categories() {
     categories = useSelector((state) => state.categories),
     notif = useSelector((state) => state.notif);
 
+  // Fetch Categories
   useEffect(() => {
     dispatch(fetchCategories());
-  }, []);
+  }, [dispatch, categories.page]);
 
   // Prevent to signin page after login
   useEffect(() => {
@@ -85,7 +86,16 @@ function Categories() {
       </Button>
 
       {/* Table */}
-      <Table status={categories.status} thead={["Kategori", "Aksi"]} data={categories.data} tbody={["name"]} editUrl={"/categories/edit"} deleteAction={(id) => handleDelete(id)} />
+      <Table
+        status={categories.status}
+        thead={["Kategori", "Aksi"]}
+        data={categories.data}
+        tbody={["name"]}
+        editUrl={"/categories/edit"}
+        deleteAction={(id) => handleDelete(id)}
+        pages={categories.page}
+        handlePageClick={({ selected }) => dispatch(setPage(selected + 1))}
+      />
     </Container>
 
     // Backup component

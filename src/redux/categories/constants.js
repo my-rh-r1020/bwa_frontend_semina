@@ -1,3 +1,4 @@
-export const START_FETCH_CATEGORIES = "redux/categories/START_FETCH_CATEGORIES";
-export const SUCCESS_FETCH_CATEGORIES = "redux/categories/SUCCESS_FETCH_CATEGORIES";
-export const ERROR_FETCH_CATEGORIES = "redux/categories/ERROR_FETCH_CATEGORIES";
+export const START_FETCH_CATEGORIES = "redux/categories/START_FETCH_CATEGORIES",
+  SUCCESS_FETCH_CATEGORIES = "redux/categories/SUCCESS_FETCH_CATEGORIES",
+  ERROR_FETCH_CATEGORIES = "redux/categories/ERROR_FETCH_CATEGORIES",
+  SET_PAGE = "redux/categories/SET_PAGE";
